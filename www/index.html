@@ -778,6 +778,9 @@ function effDays(upTo){let n=0;for(let d=d0(S.start);d<=upTo;d=addD(d,1))if(!inP
 function curWeek(){const t=today();if(t<d0(S.start))return -1;return Math.floor((effDays(t)-1)/7)}
 function dateOfEff(k){let d=d0(S.start),n=0;for(let i=0;i<2000;i++){if(!inPause(d)){if(n===k)return d;n++}d=addD(d,1)}return d}
 const weekStart=i=>dateOfEff(i*7),weekEnd=i=>dateOfEff(i*7+6);
+/* each lesson gets a planned day inside its week, skipping Fridays */
+function plannedDate(t){const w=WEEKS[t.week],j=w.tasks.indexOf(t),ds=[...Array(7)].map((_,i)=>dateOfEff(t.week*7+i)).filter(d=>d.getDay()!==5);return ds[Math.min(ds.length-1,Math.floor(j*ds.length/w.tasks.length))]}
+function dueText(t){const d=plannedDate(t),n=Math.round((d-today())/DAY);return n<0?`<span style="color:var(--bad)">Overdue since ${fmt(d)}</span>`:n===0?"Due today":n===1?"Due tomorrow":`Planned for ${d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}`}
 
 /* progress */
 const isDone=t=>!!S.done[t.id];
@@ -818,7 +821,7 @@ function renderToday(){
   else if(t<d0(S.start)){cls="calm";face="";title=`The path starts ${fmt(d0(S.start))}`;body="Want a head start? Lesson 1 is open."}
   else if(t.getDay()===5){cls="calm";face="";title="Friday: rest day";body="Your streak is safe today. A lesson still earns XP."}
   else{cls="risk";face="mad";title=st>0?`Your ${st}-day streak is at risk!`:"Start your streak today";body=`${NAGS[Math.floor(t/DAY)%NAGS.length]} <span class="clock">${untilMidnight()}</span> left.`}
-  if(q&&!inPause(t))btn=`<div style="background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:12px 14px"><div class="ev" style="margin:0 0 2px">Unit ${q.phase+1} · Lesson ${q.n+1}</div><b>${esc(q.text)}</b><div class="ev">⏱ ${q.mins} min · +${q.mins} XP</div></div><button class="big ${done?"green":""}" id="startBtn">${done?"Keep going":"Start lesson"}</button>`;
+  if(q&&!inPause(t))btn=`<div style="background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:12px 14px"><div class="ev" style="margin:0 0 2px">Unit ${q.phase+1} · Lesson ${q.n+1} · ${dueText(q)}</div><b>${esc(q.text)}</b><div class="ev">⏱ ${q.mins} min · +${q.mins} XP</div></div><button class="big ${done?"green":""}" id="startBtn">${done?"Keep going":"Start lesson"}</button>`;
   el.className="card today "+cls;
   el.innerHTML=`<div class="row">${pix(face,78)}<div><h3>${title}</h3><p class="ev" style="margin:4px 0 0">${body}</p></div></div>${btn}`;
   const b=$("#startBtn");if(b)b.onclick=()=>startLesson(q);
@@ -950,12 +953,17 @@ function renderProg(){
 }
 
 /* ---------- WIDGET BRIDGE (Android app only) ---------- */
+const native=()=>{const C=window.Capacitor;return C&&typeof C.nativePromise==="function"?C:null};
 let wT;function pushWidget(){clearTimeout(wT);wT=setTimeout(()=>{try{
-  const C=window.Capacitor;if(!C||typeof C.nativePromise!=="function")return;
-  const q=nextLesson(),st=streak(),days=activeDays(),last=[...days].sort().pop()||"";
-  const unit=q?PHASES[q.phase]:PHASES[5],ut=unit.weeks.flatMap(w=>w.tasks);
-  C.nativePromise("WidgetBridge","update",{data:JSON.stringify({streak:st.s,best:st.best,last,xp:xpTotal(),level:Math.floor(xpTotal()/300)+1,
-    next:q?q.text:"Path complete!",nextNum:q?q.n+1:48,mins:q?q.mins:0,unit:`Unit ${(q?q.phase:5)+1}: ${unit.name}`,unitPct:pct(ut),pct:pct(ALL),done:ALL.filter(isDone).length,pFrom:S.pFrom||"",pTo:S.pTo||"",start:S.start})}).catch(()=>{})}catch(e){}},300)}
+  const C=native();if(!C)return;
+  const t0=iso(today()),st=streak(),days=[...activeDays()],from=iso(addD(today(),-21));
+  const rows=[];
+  ALL.forEach(t=>{if(S.done[t.id]===t0)rows.push({t:t.text,n:t.n+1,m:t.mins,u:t.phase+1,d:iso(plannedDate(t)),done:true,on:t0})});
+  ALL.filter(t=>!isDone(t)).slice(0,8).forEach(t=>rows.push({t:t.text,n:t.n+1,m:t.mins,u:t.phase+1,d:iso(plannedDate(t)),done:false}));
+  C.nativePromise("WidgetBridge","update",{data:JSON.stringify({streak:st.s,best:st.best,last:days.sort().pop()||"",xp:xpTotal(),level:Math.floor(xpTotal()/300)+1,
+    pct:pct(ALL),done:ALL.filter(isDone).length,pFrom:S.pFrom||"",pTo:S.pTo||"",start:S.start,active:days.filter(x=>x>=from),rows})}).catch(()=>{})}catch(e){}},300)}
+/* the widget's play button opens the app straight into the next lesson */
+function checkWidgetStart(){const C=native();if(!C)return;C.nativePromise("WidgetBridge","consumeStart",{}).then(r=>{if(r&&r.start&&!LV){const q=nextLesson();if(q){show("learn");startLesson(q)}}}).catch(()=>{})}
 
 /* ---------- PLANNER ---------- */
 let _sample;function getSample(){if(_sample!==undefined)return Promise.resolve(_sample);
@@ -1054,7 +1062,8 @@ document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>show(b.dat
 function renderAll(){renderToday();renderGoal();renderUnitCard();renderPath();renderProg();pushWidget()}
 renderAll();
 setInterval(()=>{if(!LV)renderToday()},60000);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!LV)renderAll()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){if(!LV)renderAll();checkWidgetStart()}});
+setTimeout(checkWidgetStart,400);
 if(!window.Capacitor&&"serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>

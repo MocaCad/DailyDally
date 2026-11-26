@@ -7,6 +7,6 @@ import android.content.Context;
 public class DDWidgetLarge extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager manager, int[] ids) {
-        for (int id : ids) DDWidget.render(context, manager, id, true);
+        for (int id : ids) DDWidget.renderUpcoming(context, manager, id);
     }
 }

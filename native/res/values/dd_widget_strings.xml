@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dd_widget_large_desc">Streak, today\'s lesson and progress</string>
+    <string name="dd_widget_large_desc">Upcoming lessons: overdue, today and tomorrow</string>
+    <string name="dd_widget_week_desc">This week\'s streak and today\'s lesson</string>
     <string name="dd_widget_small_desc">Your streak at a glance</string>
 </resources>

@@ -16,7 +16,8 @@ for f in (root / "res").rglob("*.xml"):
 manifest = app / "AndroidManifest.xml"
 text = manifest.read_text()
 receivers = ""
-for name, label, res in [("DDWidgetLarge", "DailyDally (large)", "dd_widget_large"),
+for name, label, res in [("DDWidgetLarge", "DailyDally upcoming", "dd_widget_large"),
+                         ("DDWidgetWeek", "DailyDally week", "dd_widget_week"),
                          ("DDWidgetSmall", "DailyDally streak", "dd_widget_small")]:
     receivers += f'''
         <receiver android:name=".{name}" android:exported="false" android:label="{label}">
