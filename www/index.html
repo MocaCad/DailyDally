@@ -7,116 +7,183 @@
 <title>DailyDally</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
 <style>
-:root{--bg:#0b0c0f;--panel:#14161b;--panel2:#1b1e25;--line:#2a2e37;--ink:#f2f1ec;--mute:#9aa0ab;--accent:#fce42a;--accent-ink:#1a1700;--good:#5bd68a;--warn:#ffb547;--bad:#ff6b6b;--r:14px}
-*{box-sizing:border-box}
+:root{--bg:#0b0c0f;--panel:#14161b;--panel2:#1c1f27;--line:#2a2e37;--ink:#f2f1ec;--mute:#9aa0ab;--accent:#fce42a;--accent-ink:#1a1700;--good:#58cc02;--good2:#46a302;--bad:#ff4b4b;--bad2:#d33131;--blue:#1cb0f6;--r:16px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 a{color:var(--accent)}
-button{font-family:inherit}
-.wrap{max-width:1000px;margin:0 auto;padding:0 18px}
-header.top{position:sticky;top:0;z-index:20;background:rgba(11,12,15,.95);border-bottom:1px solid var(--line)}
-header.top .wrap{display:flex;align-items:center;gap:14px;height:58px}
-.logo{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-weight:900;font-size:14px}
-.chips{display:flex;gap:14px;font-weight:800;font-variant-numeric:tabular-nums}
+button{font-family:inherit;color:inherit}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:rgba(11,12,15,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:14px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:-.02em}
+.brand i{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-style:normal;font-size:16px;box-shadow:0 3px 0 #b8a400}
+.chips{display:flex;gap:16px;font-weight:800;font-variant-numeric:tabular-nums;margin-left:8px}
 .chips span{display:flex;gap:5px;align-items:center}
-.chips .off{opacity:.4;filter:grayscale(1)}
-nav.tabs{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
-nav.tabs::-webkit-scrollbar{display:none}
-nav.tabs button{background:none;border:0;color:var(--mute);font:600 14px/1 inherit;padding:10px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
-nav.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
-@media(max-width:760px){
-  nav.tabs{position:fixed;left:0;right:0;bottom:0;margin:0;justify-content:space-around;background:#0f1115;border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:30}
-  nav.tabs button{padding:10px 8px;font-size:12.5px}
-  body{padding-bottom:70px}
-  .chips{margin-left:auto}
+.chips .cold{opacity:.4;filter:grayscale(1)}
+nav.tabs{display:flex;gap:2px;margin-left:auto}
+nav.tabs button{background:none;border:0;color:var(--mute);font:700 14px/1 inherit;padding:11px 13px;border-radius:12px;cursor:pointer;display:flex;gap:7px;align-items:center}
+nav.tabs button span{font-size:17px}
+nav.tabs button[aria-selected="true"]{background:rgba(252,228,42,.13);color:var(--accent);box-shadow:inset 0 0 0 2px rgba(252,228,42,.45)}
+@media(max-width:880px){.brand b{display:none}nav.tabs button em{display:none}nav.tabs button{padding:11px}}
+@media(max-width:560px){
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;justify-content:space-around;background:#0f1115;border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:30}
+  body{padding-bottom:70px}.chips{margin-left:auto}
 }
-section.view{display:none;padding:26px 0 80px}
-section.view.on{display:block}
-h1{font-size:clamp(26px,4vw,40px);line-height:1.1;margin:0 0 8px;letter-spacing:-.02em}
-h2{font-size:22px;margin:34px 0 12px}
-h3{font-size:17px;margin:0 0 6px}
-.lead{color:var(--mute);max-width:700px;margin:0 0 20px;font-size:16.5px}
+section.view{display:none;padding:26px 0 90px}
+section.view.on{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}}
+h1{font-size:clamp(26px,3.6vw,38px);line-height:1.1;margin:0 0 8px;letter-spacing:-.02em}
+h2{font-size:21px;margin:30px 0 12px}
+h3{font-size:16.5px;margin:0 0 6px}
+.lead{color:var(--mute);max-width:680px;margin:0 0 20px;font-size:16px}
 .ev{color:var(--mute);font-size:14.5px;margin:4px 0}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:var(--r);padding:18px}
 .grid{display:grid;gap:14px}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
 @media(max-width:820px){.g3,.g2{grid-template-columns:1fr}}
-.bar{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;position:relative}
-.bar>i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:99px;transition:width .5s}
-.bar>u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
-.status{display:inline-block;font-weight:700;font-size:13px;padding:4px 10px;border-radius:99px;margin-top:10px}
-.s-good{background:rgba(91,214,138,.15);color:var(--good)}.s-warn{background:rgba(255,181,71,.15);color:var(--warn)}.s-bad{background:rgba(255,107,107,.15);color:var(--bad)}.s-idle{background:var(--panel2);color:var(--mute)}
-.btn{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font:600 14px inherit;cursor:pointer}
+.bar{height:12px;border-radius:99px;background:var(--panel2);overflow:hidden;position:relative}
+.bar>i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:99px;transition:width .6s cubic-bezier(.2,.9,.3,1.2)}
+.bar>i::after{content:"";position:absolute;left:8px;right:8px;top:3px;height:3px;border-radius:9px;background:rgba(255,255,255,.35)}
+.bar>u{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink)}
+.btn{background:var(--panel2);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:10px 14px;font:700 14px inherit;cursor:pointer}
 .btn:hover{border-color:var(--mute)}.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.btn.danger{color:var(--bad)}
 .btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.bigbtn{background:var(--accent);color:var(--accent-ink);border:0;border-bottom:4px solid #b8a400;border-radius:14px;padding:13px 22px;font:800 16px inherit;cursor:pointer}
-.bigbtn:active{transform:translateY(2px);border-bottom-width:2px}
-.bigbtn:disabled{background:var(--panel2);color:var(--mute);border-bottom-color:#0d0f13;cursor:not-allowed}
-.bigbtn.green{background:var(--good);border-bottom-color:#2f9a58;color:#04210f}
-.chip{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:99px;background:rgba(252,228,42,.12);color:var(--accent)}
+.big{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--accent-ink);border:0;border-bottom:5px solid #b8a400;border-radius:16px;padding:14px 26px;font:900 16px inherit;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:filter .15s}
+.big:hover{filter:brightness(1.06)}.big:active{transform:translateY(3px);border-bottom-width:2px}
+.big:disabled{background:#2a2e37;color:#5f6673;border-bottom-color:#1a1d23;cursor:not-allowed}
+.big.green{background:var(--good);border-bottom-color:var(--good2);color:#fff}
+.big.red{background:var(--bad);border-bottom-color:var(--bad2);color:#fff}
+.big.ghost{background:transparent;color:var(--mute);border:2px solid var(--line);border-bottom-width:5px}
+.chip{font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:99px;background:rgba(252,228,42,.12);color:var(--accent)}
 .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 label.field{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--mute)}
-input[type=date],input[type=time],input[type=text]{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:15px inherit;color-scheme:dark}
-textarea{width:100%;min-height:90px;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:15px/1.5 inherit;resize:vertical}
+input[type=date],input[type=time],input[type=text]{background:var(--panel2);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:9px 12px;font:15px inherit;color-scheme:dark}
+textarea{width:100%;min-height:90px;background:var(--panel2);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:10px 12px;font:15px/1.5 inherit;resize:vertical}
+pre.code{background:#090a0d;border:2px solid var(--line);border-radius:14px;padding:14px 16px;overflow:auto;font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;color:#e8e6dc;margin:14px 0}
 
-/* hero + mascot */
-.hero{display:grid;grid-template-columns:110px 1fr;gap:20px;align-items:center;border-radius:20px;padding:22px;border:2px solid var(--line);background:var(--panel)}
-.hero.risk{border-color:var(--bad);background:linear-gradient(135deg,rgba(255,107,107,.16),rgba(255,107,107,.03))}
-.hero.safe{border-color:var(--good);background:linear-gradient(135deg,rgba(91,214,138,.16),rgba(91,214,138,.03))}
-.hero.calm{border-color:#3d6c99;background:linear-gradient(135deg,rgba(96,165,250,.14),rgba(96,165,250,.03))}
-.hero h2{margin:0 0 6px;font-size:clamp(21px,3vw,28px)}
-.clock{font-variant-numeric:tabular-nums;font-weight:800;color:var(--bad)}
-.quest{margin-top:14px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.quest .qt{flex:1;min-width:200px;font-weight:600}.quest .qt small{display:block;color:var(--mute);font-weight:400;margin-top:2px}
-.pix{width:100px;height:100px;position:relative;animation:bob 2.4s ease-in-out infinite}
-.pix .body{position:absolute;inset:8px;border-radius:22px;background:var(--accent);box-shadow:inset 0 -10px 0 rgba(0,0,0,.15)}
-.pix .eye{position:absolute;top:32px;width:15px;height:20px;background:#111;border-radius:50%}
-.pix .eye::after{content:"";position:absolute;top:4px;left:4px;width:5px;height:5px;border-radius:50%;background:#fff}
-.pix .eye.l{left:27px}.pix .eye.r{right:27px}
-.pix .mouth{position:absolute;left:50%;bottom:26px;width:26px;height:11px;transform:translateX(-50%);border:4px solid #111;border-top:0;border-radius:0 0 20px 20px}
-.pix.mad .body{background:var(--bad)}.pix.mad .mouth{border:4px solid #111;border-bottom:0;border-radius:20px 20px 0 0;bottom:22px}
+/* Pix mascot */
+.pix{width:var(--s,96px);height:var(--s,96px);position:relative;flex:none;animation:bob 2.6s ease-in-out infinite}
+.pix .body{position:absolute;inset:8%;border-radius:24%;background:var(--accent);box-shadow:inset 0 -8px 0 rgba(0,0,0,.16)}
+.pix .eye{position:absolute;top:33%;width:15%;height:21%;background:#111;border-radius:50%;animation:blink 4.5s infinite}
+.pix .eye::after{content:"";position:absolute;top:18%;left:22%;width:36%;height:30%;border-radius:50%;background:#fff}
+.pix .eye.l{left:28%}.pix .eye.r{right:28%}
+.pix .mouth{position:absolute;left:50%;bottom:24%;width:28%;height:12%;transform:translateX(-50%);border:calc(var(--s,96px)*.04) solid #111;border-top:0;border-radius:0 0 40px 40px}
+.pix.mad .body{background:var(--bad)}.pix.mad .mouth{border-top:calc(var(--s,96px)*.04) solid #111;border-bottom:0;border-radius:40px 40px 0 0}
 .pix.mad .eye.l{transform:rotate(-18deg)}.pix.mad .eye.r{transform:rotate(18deg)}.pix.mad{animation:shake .5s ease-in-out infinite}
-.pix.happy .body{background:var(--good)}
-.pix.sleep .body{background:#60a5fa}.pix.sleep .eye{height:4px;top:40px;border-radius:4px}.pix.sleep .eye::after{display:none}.pix.sleep{animation:bob 4s ease-in-out infinite}
+.pix.happy .body{background:var(--good)}.pix.jump{animation:jump .7s ease-in-out infinite}
+.pix.sleep .body{background:#60a5fa}.pix.sleep .eye{height:4%;top:42%;animation:none}.pix.sleep .eye::after{display:none}
 @keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes jump{0%,100%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-22px) scale(.95,1.05)}60%{transform:translateY(0) scale(1.08,.92)}}
 @keyframes shake{25%{transform:translateX(-3px) rotate(-2deg)}75%{transform:translateX(3px) rotate(2deg)}}
-@media(max-width:600px){.hero{grid-template-columns:1fr}.pix{width:76px;height:76px}.pix .eye{top:22px;width:11px;height:15px}.pix .eye.l{left:19px}.pix .eye.r{right:19px}.pix .mouth{bottom:17px;width:19px}.pix.sleep .eye{top:28px}}
+@keyframes blink{0%,46%,50%,100%{transform:scaleY(1)}48%{transform:scaleY(.1)}}
+
+/* learn layout */
+.learn-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:30px;align-items:start}
+.side{position:sticky;top:84px;display:flex;flex-direction:column;gap:14px}
+@media(max-width:980px){.learn-grid{grid-template-columns:1fr}.side{order:-1;position:static;display:grid;grid-template-columns:1fr 1fr}.side .today{grid-column:1/-1}}
+@media(max-width:600px){.side{grid-template-columns:1fr}}
+.today{display:flex;flex-direction:column;gap:12px;border-width:2px}
+.today.risk{border-color:var(--bad);background:linear-gradient(160deg,rgba(255,75,75,.16),var(--panel) 60%)}
+.today.safe{border-color:var(--good);background:linear-gradient(160deg,rgba(88,204,2,.16),var(--panel) 60%)}
+.today.calm{border-color:#2f5d86;background:linear-gradient(160deg,rgba(28,176,246,.14),var(--panel) 60%)}
+.today .row{display:flex;gap:14px;align-items:center}
+.today h3{font-size:19px;line-height:1.25;margin:0}
+.clock{font-variant-numeric:tabular-nums;font-weight:900;color:var(--bad)}
+.ring{display:flex;gap:14px;align-items:center}
+.ring svg{flex:none}
+.ring circle.fg{transition:stroke-dashoffset 1s cubic-bezier(.2,.9,.3,1)}
+.week-dots{display:flex;gap:6px;margin-top:10px}
+.week-dots span{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;background:var(--panel2);color:var(--mute)}
+.week-dots span.hit{background:var(--accent);color:var(--accent-ink);animation:pop .4s backwards}
+.week-dots span.frz{background:#1e3a55;color:#bfe3ff}
+.week-dots span.now{outline:2px solid var(--ink);outline-offset:2px}
 
 /* path */
-.unit{margin:34px 0 8px;border-radius:16px;padding:16px 18px;background:var(--uc);color:#111;display:flex;justify-content:space-between;gap:12px;align-items:center}
-.unit b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.06em;opacity:.7}
-.unit span{font-weight:800;font-size:19px}
-.unit em{font-style:normal;font-weight:800;font-size:14px;background:rgba(0,0,0,.15);padding:4px 10px;border-radius:99px;white-space:nowrap}
-.unit.locked{filter:grayscale(1) brightness(.55)}
-.wklabel{text-align:center;color:var(--mute);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:22px 0 4px}
-.path{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 0}
-.node{position:relative;width:74px;height:70px;border-radius:50%;border:0;cursor:pointer;font-size:26px;display:grid;place-items:center;background:var(--uc);color:#111;box-shadow:0 7px 0 rgba(0,0,0,.35);transform:translateX(var(--x));transition:transform .15s}
-.node:active{box-shadow:0 3px 0 rgba(0,0,0,.35);transform:translateX(var(--x)) translateY(4px)}
+.unit{position:relative;margin:0 0 6px;border-radius:18px;padding:18px 20px;background:var(--uc);color:#111;display:flex;justify-content:space-between;gap:12px;align-items:center;overflow:hidden;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.unit:not(:first-child){margin-top:40px}
+.unit small{display:block;font-weight:900;font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;opacity:.65}
+.unit span{font-weight:900;font-size:21px;letter-spacing:-.01em}
+.unit em{font-style:normal;font-weight:900;font-size:13px;background:rgba(0,0,0,.14);padding:5px 11px;border-radius:99px;white-space:nowrap;position:relative;z-index:1}
+.unit svg.fig{position:absolute;right:70px;bottom:-14px;width:96px;height:96px;opacity:.35}
+.unit.locked{filter:grayscale(1) brightness(.5)}
+.wklabel{display:flex;align-items:center;gap:12px;color:var(--mute);font-size:12.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin:26px 0 6px}
+.wklabel::before,.wklabel::after{content:"";flex:1;height:2px;background:var(--line)}
+.path{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;padding:12px 0}
+.node{position:relative;width:78px;height:72px;border-radius:50%;border:0;cursor:pointer;font-size:27px;display:grid;place-items:center;background:var(--uc);color:#111;box-shadow:0 8px 0 rgba(0,0,0,.35),inset 0 -6px 0 rgba(0,0,0,.12);transform:translateX(var(--x));transition:transform .15s}
+.node.in{animation:pop .45s cubic-bezier(.2,1.4,.4,1) backwards;animation-delay:var(--d,0s)}
+.node:active{box-shadow:0 3px 0 rgba(0,0,0,.35);transform:translateX(var(--x)) translateY(5px)}
 .node.done{background:var(--accent)}
-.node.locked{background:#2a2e37;color:#555c68;box-shadow:0 7px 0 #15171c;cursor:pointer}
-.node.current{outline:5px solid rgba(252,228,42,.35);outline-offset:5px;animation:pulse 1.6s ease-in-out infinite}
-.node.current::after{content:"START";position:absolute;top:-38px;left:50%;transform:translateX(-50%);background:var(--ink);color:#111;font:800 12px system-ui;padding:5px 10px;border-radius:8px;letter-spacing:.06em;animation:bob 1.4s ease-in-out infinite}
-@keyframes pulse{50%{outline-color:rgba(252,228,42,.1)}}
+.node.locked{background:#2a2e37;color:#59606c;box-shadow:0 8px 0 #15171c}
+.node.current{animation:pulse 1.8s ease-in-out infinite}
+.node.current::before{content:"";position:absolute;inset:-12px;border-radius:50%;border:6px solid rgba(252,228,42,.35)}
+.node .tip{position:absolute;top:-46px;left:50%;transform:translateX(-50%);background:var(--ink);color:#111;font:900 12.5px system-ui;padding:7px 12px;border-radius:10px;letter-spacing:.06em;white-space:nowrap;animation:bob 1.4s ease-in-out infinite;pointer-events:none}
+.node .tip::after{content:"";position:absolute;bottom:-6px;left:50%;margin-left:-6px;border:6px solid transparent;border-top-color:var(--ink);border-bottom:0}
+.node.shake{animation:shake .4s 2}
+.deco{position:absolute;width:110px;height:110px;opacity:.9;animation:float 5s ease-in-out infinite;pointer-events:none}
+@keyframes float{50%{transform:translateY(-10px) rotate(3deg)}}
+@keyframes pop{from{transform:translateX(var(--x,0)) scale(.3);opacity:0}}
+@keyframes pulse{50%{transform:translateX(var(--x)) scale(1.06)}}
 
-/* dialog */
-dialog{border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--ink);max-width:560px;width:calc(100% - 28px);padding:22px}
-dialog::backdrop{background:rgba(0,0,0,.65)}
-.tutor{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px;font-size:15px;max-height:46vh;overflow:auto}
+/* lesson overlay */
+#lv{position:fixed;inset:0;z-index:60;background:var(--bg);display:none;flex-direction:column}
+#lv.on{display:flex;animation:fadeUp .25s ease}
+.lv-top{display:flex;align-items:center;gap:16px;padding:16px 20px;max-width:860px;width:100%;margin:0 auto}
+.lv-x{background:none;border:0;font-size:26px;color:var(--mute);cursor:pointer;line-height:1;padding:4px 8px}
+.lv-top .bar{flex:1;height:16px}
+.lv-top .bar>i{background:var(--good)}
+.lv-body{flex:1;overflow:auto;padding:10px 20px 30px}
+.lv-inner{max-width:760px;margin:0 auto}
+.lv-kicker{font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:13px;color:var(--blue);margin:8px 0}
+.lv-inner h2{font-size:clamp(22px,3vw,30px);margin:4px 0 16px;line-height:1.2}
+.speech{display:flex;gap:16px;align-items:flex-start}
+.bubble{position:relative;flex:1;background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:16px 18px;font-size:16.5px}
+.bubble::before{content:"";position:absolute;left:-11px;top:26px;width:18px;height:18px;background:var(--panel);border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg)}
+.toolbtn{display:inline-flex;align-items:center;gap:8px;margin-top:6px;text-decoration:none;font-weight:800;color:var(--blue);border:2px solid #20425a;border-radius:12px;padding:9px 14px;background:rgba(28,176,246,.08)}
+.steps{list-style:none;padding:0;margin:14px 0;display:flex;flex-direction:column;gap:10px}
+.steps button{width:100%;display:flex;gap:14px;align-items:flex-start;text-align:left;background:var(--panel);border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:14px 16px;font:600 16px/1.45 inherit;cursor:pointer;transition:border-color .15s,background .15s}
+.steps button b{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--mute);display:grid;place-items:center;font-size:14px;color:transparent}
+.steps button[aria-pressed="true"]{border-color:var(--good);background:rgba(88,204,2,.09)}
+.steps button[aria-pressed="true"] b{background:var(--good);border-color:var(--good);color:#fff;animation:pop .3s}
+.opts{display:grid;gap:12px;margin-top:14px}
+.opts button{background:var(--panel);border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:16px 18px;text-align:left;font:700 16.5px inherit;cursor:pointer;display:flex;gap:14px;align-items:center}
+.opts button kbd{flex:none;width:30px;height:30px;border:2px solid var(--line);border-radius:9px;display:grid;place-items:center;font:800 13px inherit;color:var(--mute)}
+.opts button[aria-pressed="true"]{border-color:var(--blue);background:rgba(28,176,246,.1);color:#bfe7ff}
+.opts button.right{border-color:var(--good);background:rgba(88,204,2,.12);color:#c7f59f}
+.opts button.wrong{border-color:var(--bad);background:rgba(255,75,75,.1);color:#ffc0c0;animation:shake .35s}
+.mic{width:120px;height:120px;border-radius:50%;margin:16px auto;display:grid;place-items:center;font-size:48px;background:rgba(28,176,246,.12);border:3px solid var(--blue);animation:ripple 2s infinite}
+@keyframes ripple{0%{box-shadow:0 0 0 0 rgba(28,176,246,.45)}100%{box-shadow:0 0 0 26px rgba(28,176,246,0)}}
+.lv-foot{border-top:2px solid var(--line);padding:16px 20px calc(16px + env(safe-area-inset-bottom));transition:background .2s}
+.lv-foot .lv-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.lv-foot.ok{background:#16240b;border-color:transparent}.lv-foot.no{background:#2a1111;border-color:transparent}
+.fb{display:flex;gap:12px;align-items:center;flex:1;min-width:220px}
+.fb .ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:26px;flex:none;background:#fff}
+.fb strong{font-size:20px;display:block}
+.ok .fb strong{color:var(--good)}.no .fb strong{color:var(--bad)}
+.fb p{margin:2px 0 0;font-size:14.5px}
+.ok .fb p{color:#bfe9a0}.no .fb p{color:#ffbdbd}
+.done-screen{text-align:center;padding-top:20px}
+.done-screen h2{font-size:clamp(28px,4vw,40px);color:var(--accent)}
+.tiles{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:24px 0}
+.tile{min-width:130px;border-radius:16px;border:2px solid var(--tc);overflow:hidden;animation:pop .5s backwards;animation-delay:var(--d)}
+.tile small{display:block;background:var(--tc);color:#111;font-weight:900;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:5px}
+.tile b{display:block;font-size:26px;padding:12px 10px;font-variant-numeric:tabular-nums}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
 
 /* progress */
 .stat b{display:flex;align-items:center;gap:8px;font-size:34px;line-height:1.1}
 .stat>span{color:var(--mute);font-size:14px}
-.week-dots{display:flex;gap:6px;margin-top:10px}
-.week-dots span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;background:var(--panel2);color:var(--mute)}
-.week-dots span.hit{background:var(--accent);color:var(--accent-ink)}.week-dots span.frz{background:#2a4a6b;color:#bfe3ff}.week-dots span.now{outline:2px solid var(--ink);outline-offset:2px}
 .league{list-style:none;margin:8px 0 0;padding:0}
-.league li{display:flex;justify-content:space-between;padding:8px 12px;border-radius:10px;margin-top:6px;background:var(--panel2)}
-.league li.me{background:var(--accent);color:var(--accent-ink);font-weight:800}
+.league li{display:flex;justify-content:space-between;padding:9px 12px;border-radius:12px;margin-top:6px;background:var(--panel2)}
+.league li.me{background:var(--accent);color:var(--accent-ink);font-weight:900}
 .chart{display:flex;align-items:flex-end;gap:6px;height:150px;padding-top:10px}
 .chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%}
 .chart .stack{flex:1;width:100%;display:flex;align-items:flex-end;gap:2px}
-.chart .pl,.chart .ac{flex:1;border-radius:4px 4px 0 0;min-height:2px}
+.chart .pl,.chart .ac{flex:1;border-radius:5px 5px 0 0;min-height:2px;transition:height .8s}
 .chart .pl{background:var(--panel2);border:1px dashed #4a505c}.chart .ac{background:var(--accent)}
 .chart small{color:var(--mute);font-size:11px}
 .legend{display:flex;gap:16px;color:var(--mute);font-size:13px;margin-top:8px}
@@ -127,76 +194,77 @@ dialog::backdrop{background:rgba(0,0,0,.65)}
 .lvl{font-size:13px;color:var(--mute);margin-top:6px}
 
 /* planner */
-.chat{display:flex;flex-direction:column;gap:10px;min-height:240px;max-height:58vh;overflow:auto;padding:4px 2px}
-.msg{max-width:85%;padding:10px 14px;border-radius:14px;white-space:pre-wrap;font-size:15px}
+.chat{display:flex;flex-direction:column;gap:10px;min-height:240px;max-height:56vh;overflow:auto;padding:4px 2px}
+.msg{max-width:85%;padding:10px 14px;border-radius:16px;white-space:pre-wrap;font-size:15px}
 .msg.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
 .msg.ai{align-self:flex-start;background:var(--panel2);border-bottom-left-radius:4px}
 .suggest{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.suggest button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:8px 12px;font:600 13.5px inherit;cursor:pointer}
+.suggest button{background:var(--panel2);border:2px solid var(--line);border-radius:99px;padding:8px 12px;font:700 13.5px inherit;cursor:pointer}
 .composer{display:flex;gap:8px;margin-top:10px}
-.composer textarea{min-height:48px;height:48px}
+.composer textarea{min-height:52px;height:52px}
 
 /* journal */
-.jbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;position:sticky;top:58px;z-index:5;background:var(--bg);padding:8px 0}
+.jbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;position:sticky;top:62px;z-index:5;background:var(--bg);padding:8px 0}
 .swatch{width:30px;height:30px;border-radius:50%;border:3px solid transparent;cursor:pointer}
 .swatch[aria-pressed="true"]{border-color:var(--ink)}
-.sep{width:1px;height:28px;background:var(--line)}
-.palm{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
-.switch{position:relative;width:46px;height:26px;border-radius:99px;background:var(--panel2);border:1px solid var(--line);cursor:pointer;flex:none}
+.sep{width:2px;height:28px;background:var(--line)}
+.palm{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px}
+.switch{position:relative;width:48px;height:28px;border-radius:99px;background:var(--panel2);border:2px solid var(--line);cursor:pointer;flex:none}
 .switch::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--mute);transition:.2s}
 .switch[aria-checked="true"]{background:var(--good);border-color:var(--good)}
 .switch[aria-checked="true"]::after{left:22px;background:#fff}
-.paper{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fbfaf5}
+.paper{border-radius:16px;overflow:hidden;border:2px solid var(--line);background:#fbfaf5}
 #ink{display:block;width:100%;touch-action:none;cursor:crosshair}
-.paper.palm-on #ink{touch-action:pan-y}
-.entries{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px}
-.entry{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px;cursor:pointer;text-align:left;color:var(--ink)}
-.entry img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;background:#fbfaf5;display:block}
+.entries{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:14px}
+.entry{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:8px;cursor:pointer;text-align:left}
+.entry img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:9px;background:#fbfaf5;display:block}
 .entry small{display:block;color:var(--mute);margin-top:6px;font-size:12px}
 .entry.on{border-color:var(--accent)}
 
-/* kit / rules */
+/* more */
 .kit table{width:100%;border-collapse:collapse;font-size:14.5px}
 .kit td,.kit th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-.kit th{color:var(--mute);font-size:13px;font-weight:600}
-code.cmd{display:inline-block;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:13px;color:var(--accent);cursor:pointer}
+.kit th{color:var(--mute);font-size:13px;font-weight:700}
 .rules{counter-reset:r;list-style:none;padding:0;margin:0}
-.rules li{counter-increment:r;position:relative;padding:14px 16px 14px 56px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px}
-.rules li::before{content:counter(r);position:absolute;left:16px;top:14px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:800;display:grid;place-items:center;font-size:14px}
+.rules li{counter-increment:r;position:relative;padding:14px 16px 14px 58px;background:var(--panel);border:2px solid var(--line);border-radius:var(--r);margin-bottom:10px}
+.rules li::before{content:counter(r);position:absolute;left:16px;top:14px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:900;display:grid;place-items:center;font-size:14px}
 .rules li b{display:block}.rules li span{color:var(--mute);font-size:14.5px}
 .subtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
-.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--accent);color:var(--accent-ink);font-weight:800;padding:10px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:99;max-width:90vw}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--accent);color:var(--accent-ink);font-weight:900;padding:11px 18px;border-radius:12px;opacity:0;transition:.25s;pointer-events:none;z-index:99;max-width:90vw;box-shadow:0 4px 0 #b8a400}
 .toast.on{opacity:1;transform:translateX(-50%)}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <div class="logo" aria-hidden="true">&lt;/&gt;</div>
-  <div class="chips" aria-label="Stats"><span id="cStreak" title="Day streak">🔥 0</span><span title="Total XP">⚡ <b id="cXp">0</b></span></div>
+  <div class="brand"><i aria-hidden="true">&lt;/&gt;</i><b>DailyDally</b></div>
+  <div class="chips"><span id="cStreak" title="Day streak">🔥 0</span><span title="Total XP">⚡ <b id="cXp">0</b></span></div>
   <nav class="tabs" role="tablist">
-    <button role="tab" data-v="learn" aria-selected="true">Learn</button>
-    <button role="tab" data-v="prog">Progress</button>
-    <button role="tab" data-v="plan">AI planner</button>
-    <button role="tab" data-v="journal">Journal</button>
-    <button role="tab" data-v="more">More</button>
+    <button role="tab" data-v="learn" aria-selected="true"><span>🏠</span><em>Learn</em></button>
+    <button role="tab" data-v="prog"><span>📈</span><em>Progress</em></button>
+    <button role="tab" data-v="plan"><span>🤖</span><em>Planner</em></button>
+    <button role="tab" data-v="journal"><span>✒️</span><em>Journal</em></button>
+    <button role="tab" data-v="more"><span>⋯</span><em>More</em></button>
   </nav>
 </div></header>
 
 <main class="wrap">
-
-<!-- LEARN -->
 <section class="view on" id="learn">
-  <div class="hero" id="hero"></div>
-  <div id="path"></div>
+  <div class="learn-grid">
+    <div id="path"></div>
+    <aside class="side">
+      <div class="card today" id="today"></div>
+      <div class="card"><div class="ring" id="goal"></div><div class="week-dots" id="dots"></div></div>
+      <div class="card" id="unitCard"></div>
+    </aside>
+  </div>
 </section>
 
-<!-- PROGRESS -->
 <section class="view" id="prog">
   <h1>Your progress</h1>
   <p class="lead">You only compete with yourself. Fridays and the exam pause never break your streak.</p>
   <div class="grid g3">
-    <div class="card stat"><b id="sDone">0%</b><span>of the path done</span><div class="bar" style="margin-top:10px"><i id="sDoneBar"></i><u id="sPlanMark"></u></div><div id="sStatus"></div></div>
-    <div class="card stat"><b>🔥 <span id="sStreak">0</span></b><span>day streak</span><div class="week-dots" id="dots"></div><div class="lvl" id="sBest"></div></div>
+    <div class="card stat"><b id="sDone">0%</b><span>of the path done</span><div class="bar" style="margin-top:10px"><i id="sDoneBar"></i><u id="sPlanMark"></u></div><div class="lvl" id="sStatus"></div></div>
+    <div class="card stat"><b>🔥 <span id="sStreak">0</span></b><span>day streak</span><div class="lvl" id="sBest"></div></div>
     <div class="card stat"><b id="sWeak">0/8</b><span>weak points fixed</span><div class="lvl" id="sNext"></div></div>
   </div>
   <div class="grid g2" style="margin-top:14px">
@@ -210,10 +278,9 @@ code.cmd{display:inline-block;background:var(--bg);border:1px solid var(--line);
   <div class="weak" id="weakList"></div>
 </section>
 
-<!-- PLANNER -->
 <section class="view" id="plan">
   <h1>AI planner</h1>
-  <p class="lead">Claude sees your path, streak, pause dates and weak points. Ask it to plan your week, fit lessons around a test, or quiz you on what you just learned.</p>
+  <p class="lead">Claude sees your path, streak, pause dates and weak points. Ask it to plan your week, fit lessons around a test, or quiz you.</p>
   <div class="card" id="planOn" hidden>
     <div class="chat" id="chat" aria-live="polite"></div>
     <div class="suggest">
@@ -222,68 +289,60 @@ code.cmd{display:inline-block;background:var(--bg);border:1px solid var(--line);
       <button data-q="Quiz me with 3 questions on the last lesson I completed, one at a time, like a judge would ask.">🎤 Mock interview</button>
       <button data-q="Which weak point should I focus on most right now, and why?">🎯 Biggest weakness</button>
     </div>
-    <div class="composer"><textarea id="ask" placeholder="Ask your planner…" aria-label="Message"></textarea><button class="bigbtn" id="send">Send</button></div>
+    <div class="composer"><textarea id="ask" placeholder="Ask your planner…" aria-label="Message"></textarea><button class="big" id="send">Send</button></div>
     <p class="ev" style="margin-top:8px"><button class="btn" id="clearChat" style="padding:6px 10px;font-size:12.5px">Clear chat</button></p>
   </div>
   <div class="card" id="planOff">
     <h3>The planner runs inside Claude</h3>
-    <p class="ev">In the installed app, Claude can't be reached directly. Copy your progress summary, then paste it into a Claude chat and ask for a plan. You get the same planner.</p>
+    <p class="ev">This app can't reach Claude directly. Copy your progress, paste it into the Claude app, and ask for a plan. You get the same planner.</p>
     <div class="controls" style="margin-top:12px"><button class="btn pri" id="copyCtx">Copy my progress for Claude</button><a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener">Open Claude</a></div>
   </div>
 </section>
 
-<!-- JOURNAL -->
 <section class="view" id="journal">
   <h1>Journal</h1>
-  <p class="lead">Write or sketch with your stylus: plans, notes on a lesson, a diagram of the solver. Each page saves on this device.</p>
+  <p class="lead">Write and sketch with your stylus: plans, cheat sheets, diagrams. Pages save on this tablet.</p>
   <div class="jbar">
     <button class="btn" id="tPen" aria-pressed="true">✒️ Pen</button>
     <button class="btn" id="tHi" aria-pressed="false">🖍 Highlighter</button>
     <button class="btn" id="tEr" aria-pressed="false">🧽 Eraser</button>
-    <span class="sep"></span>
-    <span id="swatches" class="controls" style="gap:6px"></span>
-    <span class="sep"></span>
+    <span class="sep"></span><span id="swatches" class="controls" style="gap:6px"></span><span class="sep"></span>
     <label class="field" style="flex-direction:row;align-items:center;gap:6px">Size<input type="range" id="size" min="1" max="12" value="3"></label>
     <span class="sep"></span>
     <span class="palm"><button class="switch" id="palm" role="switch" aria-checked="true" aria-label="Palm rejection"></button>Palm rejection</span>
     <span class="sep"></span>
-    <button class="btn" id="undo">↶ Undo</button>
-    <button class="btn" id="clearPage">Clear</button>
-    <button class="btn pri" id="newPage">+ New page</button>
+    <button class="btn" id="undo">↶ Undo</button><button class="btn" id="clearPage">Clear</button><button class="btn pri" id="newPage">+ New page</button>
   </div>
   <p class="ev" id="palmNote"></p>
-  <div class="paper" id="paper"><canvas id="ink"></canvas></div>
+  <div class="paper"><canvas id="ink"></canvas></div>
   <div class="controls" style="margin-top:10px"><input type="text" id="jTitle" placeholder="Page title (optional)" style="flex:1;min-width:180px"><button class="btn danger" id="delPage">Delete page</button></div>
   <h2>Pages</h2>
   <div class="entries" id="entries"></div>
 </section>
 
-<!-- MORE -->
 <section class="view" id="more">
   <div class="subtabs">
-    <button class="btn" data-s="kit" aria-pressed="true">Kit</button>
+    <button class="btn" data-s="kit" aria-pressed="true">Tablet kit</button>
     <button class="btn" data-s="rules" aria-pressed="false">AI rules</button>
     <button class="btn" data-s="set" aria-pressed="false">Settings</button>
   </div>
   <div data-sub="kit" class="kit">
-    <h1>Your kit</h1>
-    <p class="lead">Everything to install, and the free GitHub repos each unit uses. Tap a command to copy it.</p>
+    <h1>Your tablet kit</h1>
+    <p class="lead">No laptop needed. Everything on the path runs in your tablet's browser. A Bluetooth or keyboard cover makes typing code much easier, so it's worth borrowing one if you can.</p>
     <div class="card" style="overflow-x:auto"><table>
-      <tr><th>App</th><th>Why</th><th>Get it</th></tr>
-      <tr><td><b>Python 3.12+</b></td><td>Units 1, 5 and 6. On Windows, tick "Add python.exe to PATH".</td><td><a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org</a></td></tr>
-      <tr><td><b>VS Code</b></td><td>Your editor for everything.</td><td><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a></td></tr>
-      <tr><td><b>Node.js LTS</b></td><td>Run JS outside the browser (Unit 2), and check syntax with <code>node --check</code>.</td><td><a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a></td></tr>
-      <tr><td><b>Git</b></td><td>Unit 4: real git on your own laptop.</td><td><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com</a></td></tr>
+      <tr><th>Tool</th><th>What it replaces</th><th>Used in</th></tr>
+      <tr><td><a href="https://jupyter.org/try-jupyter/lab/" target="_blank" rel="noopener"><b>JupyterLite</b></a></td><td>Python with NumPy and matplotlib, in the browser. Your notebooks save in the browser.</td><td>Units 1 and 6</td></tr>
+      <tr><td><a href="https://pythontutor.com/visualize.html" target="_blank" rel="noopener"><b>Python Tutor</b></a></td><td>A debugger that steps through Python or JavaScript line by line.</td><td>Units 1 and 2</td></tr>
+      <tr><td><a href="https://codepen.io/pen/" target="_blank" rel="noopener"><b>CodePen</b></a></td><td>An HTML, CSS and JS editor with a live preview and console.</td><td>Units 2, 3, 5 and 6</td></tr>
+      <tr><td><a href="https://github.com/liriliri/eruda" target="_blank" rel="noopener"><b>Eruda</b></a></td><td>DevTools (F12) inside your own page.</td><td>Unit 3</td></tr>
+      <tr><td><a href="https://github.com/codespaces" target="_blank" rel="noopener"><b>GitHub Codespaces</b></a></td><td>A full computer in the browser: VS Code, terminal and git, with free monthly hours.</td><td>Units 4 to 6</td></tr>
+      <tr><td><a href="https://exercism.org/tracks/python" target="_blank" rel="noopener"><b>Exercism</b></a></td><td>Practice exercises with automatic tests.</td><td>Unit 1</td></tr>
     </table></div>
-    <h2>Packages</h2>
+    <h2>Optional apps</h2>
     <div class="card" style="overflow-x:auto"><table>
-      <tr><th>Package</th><th>When</th><th>Install</th></tr>
-      <tr><td><b>numpy</b></td><td>Unit 1, week 3: arrays and <code>np.linalg.solve</code>.</td><td><code class="cmd">pip install numpy</code></td></tr>
-      <tr><td><b>matplotlib</b></td><td>Unit 1, week 3: plot your sims.</td><td><code class="cmd">pip install matplotlib</code></td></tr>
-      <tr><td><b>pytest</b></td><td>From week 2: real tests.</td><td><code class="cmd">pip install pytest</code></td></tr>
-      <tr><td><b>VS Code: Python</b></td><td>Run and debug Python.</td><td><code class="cmd">code --install-extension ms-python.python</code></td></tr>
-      <tr><td><b>VS Code: Live Server</b></td><td>Auto-reload HTML while you code.</td><td><code class="cmd">code --install-extension ritwickdey.LiveServer</code></td></tr>
-      <tr><td><b>VS Code: GitLens</b></td><td>See who changed what.</td><td><code class="cmd">code --install-extension eamodio.gitlens</code></td></tr>
+      <tr><th>App</th><th>Why</th><th>Where to get it</th></tr>
+      <tr><td><b>Pydroid 3</b></td><td>Offline Python on Android, with pip for NumPy and matplotlib.</td><td>Aurora Store or APKPure (your MatePad has no Play Store)</td></tr>
+      <tr><td><b>Acode</b></td><td>An offline code editor with an HTML preview.</td><td>F-Droid, or github.com/Acode-Foundation</td></tr>
     </table></div>
     <h2>Free GitHub repositories</h2>
     <div class="card" style="overflow-x:auto"><table id="repoTable"><tr><th>Repository</th><th>Use it for</th><th>Weeks</th></tr></table></div>
@@ -292,13 +351,13 @@ code.cmd{display:inline-block;background:var(--bg);border:1px solid var(--line);
     <h1>How to build with AI and still own it</h1>
     <ol class="rules">
       <li><b>Write the spec before the prompt.</b><span>Five lines: what it does, inputs, outputs, one edge case, how you'll test it.</span></li>
-      <li><b>Ask for hints, not files.</b><span>"What's wrong with line 14?" beats "write the solver". Ask for full code only for parts you've already built once by hand.</span></li>
-      <li><b>Small diffs only.</b><span>One function or one change at a time. Read every changed line before it goes in.</span></li>
-      <li><b>Type it, don't paste it.</b><span>For core code (the engine, the maths), retype AI code yourself.</span></li>
+      <li><b>Ask for hints, not files.</b><span>"What's wrong with line 14?" beats "write the solver".</span></li>
+      <li><b>Small diffs only.</b><span>One change at a time. Read every changed line before it goes in.</span></li>
+      <li><b>Type it, don't paste it.</b><span>Retype AI code yourself for anything core.</span></li>
       <li><b>The explain-back test.</b><span>After any AI help, close the chat and explain the code out loud.</span></li>
-      <li><b>Run it before you trust it.</b><span>Every function gets at least one test before you build on top of it.</span></li>
-      <li><b>Feature freeze 48 hours before a deadline.</b><span>After that, only fixes and practising your explanation.</span></li>
-      <li><b>Declare it honestly.</b><span>Keep a short log of what AI did and what you did.</span></li>
+      <li><b>Run it before you trust it.</b><span>Every function gets a test before you build on it.</span></li>
+      <li><b>Feature freeze 48 hours before a deadline.</b><span>After that, only fixes and rehearsing.</span></li>
+      <li><b>Declare it honestly.</b><span>Keep a log of what AI did and what you did.</span></li>
     </ol>
   </div>
   <div data-sub="set" hidden>
@@ -307,147 +366,404 @@ code.cmd{display:inline-block;background:var(--bg);border:1px solid var(--line);
       <div class="card"><h3>Dates</h3>
         <div class="controls" style="margin-top:10px"><label class="field">Path starts<input type="date" id="startDate"></label></div>
         <div class="controls" style="margin-top:10px"><label class="field">Pause from<input type="date" id="pFrom"></label><label class="field">Pause to<input type="date" id="pTo"></label></div>
-        <p class="ev">During the pause there are no lessons, no nagging, and your streak is frozen. The schedule picks up where it left off.</p>
-      </div>
+        <p class="ev">During the pause there are no lessons and no nagging, and your streak is frozen.</p></div>
       <div class="card"><h3>Backup</h3>
         <div class="controls" style="margin-top:10px"><button class="btn pri" id="exportBtn">Export progress</button><label class="btn" for="importFile">Import backup</label><input type="file" id="importFile" accept=".json,application/json" hidden><button class="btn danger" id="resetBtn">Reset progress</button></div>
-        <p class="ev">Export every Sunday. Journal pages aren't in the backup; save important ones as images.</p>
-      </div>
-      <div class="card"><h3>Reminders on this device</h3>
-        <div class="controls" style="margin-top:10px"><label class="field">Reminder time<input type="time" id="remTime"></label><button class="btn pri" id="notifBtn">Turn on</button></div>
-        <p class="ev" id="notifState"></p>
-      </div>
+        <p class="ev">Export every Sunday. Journal pages stay on this tablet.</p></div>
       <div class="card"><h3>Learning log</h3><textarea id="log" placeholder="One line per session: what you built, what confused you, what AI did vs what you did."></textarea></div>
     </div>
   </div>
 </section>
 </main>
 
-<dialog id="lesson"><div id="lessonBody"></div></dialog>
+<div id="lv" role="dialog" aria-modal="true" aria-label="Lesson">
+  <div class="lv-top"><button class="lv-x" id="lvX" aria-label="Close lesson">✕</button><div class="bar"><i id="lvBar"></i></div><span class="chip" id="lvXp"></span></div>
+  <div class="lv-body"><div class="lv-inner" id="lvBody"></div></div>
+  <div class="lv-foot" id="lvFoot"><div class="lv-inner"><div class="fb" id="lvFb"></div><button class="big" id="lvGo">Continue</button></div></div>
+</div>
+<canvas id="confetti"></canvas>
 <div class="toast" id="toast"></div>
 
 <script>
+const TOOLS={
+ jup:["JupyterLite (Python in your browser)","https://jupyter.org/try-jupyter/lab/"],
+ tutor:["Python Tutor (step through code)","https://pythontutor.com/visualize.html"],
+ pen:["CodePen (HTML, CSS, JS)","https://codepen.io/pen/"],
+ exer:["Exercism Python track","https://exercism.org/tracks/python"],
+ frog:["Flexbox Froggy","https://flexboxfroggy.com/"],
+ grid:["Grid Garden","https://cssgridgarden.com/"],
+ cs:["GitHub Codespaces","https://github.com/codespaces"],
+ lgb:["Learn Git Branching","https://learngitbranching.js.org/"],
+ eruda:["Eruda (console for tablets)","https://github.com/liriliri/eruda"],
+ gh:["GitHub","https://github.com/"]
+};
 const WEAK = [
   {id:"W1", t:"Python fundamentals", ev:"In the engine: indentation errors, <code>[[column]]</code> instead of <code>[row][column]</code>, a missing <code>[k]</code>, and back substitution placed inside the elimination loop.", fix:"Write lists, loops and the solver by hand until they feel automatic."},
-  {id:"W2", t:"Switching between languages", ev:"The Python-to-JS translation had <code>#</code> comments, <code>lenght</code>, <code>Maths</code>, <code>Null</code>, <code>let</code> misuse and Python-style loops.", fix:"Your own Python-to-JS cheat sheet, plus porting code by hand."},
-  {id:"W3", t:"Explaining your own code", ev:"The recorded interview: the questions were about engine.js, and the answers didn't come out under pressure.", fix:"An explain-back after every task, and mock interviews at weeks 4, 8 and 12."},
-  {id:"W4", t:"Debugging on your own", ev:"Most bugs were found by the AI, not by reading the error, testing small pieces or using DevTools.", fix:"Break code on purpose, read tracebacks, use asserts and breakpoints."},
-  {id:"W5", t:"Git and GitHub", ev:"Files uploaded as <code>engine(1).js</code>, a stale fork causing conflicts, \"Accept both\" duplicating a section, and quick delete commits that broke GitHub Pages.", fix:"Practise git locally: branches, pull requests and resolving conflicts on purpose."},
-  {id:"W6", t:"HTML and CSS by hand", ev:"Most of the Doc Scanner and NASA site UI was AI-written. Fixes for caching, lag from backdrop-filter and overflow on phones came from AI, not from you.", fix:"Rebuild sections by hand, learn Flexbox and Grid, use DevTools."},
+  {id:"W2", t:"Switching between languages", ev:"The Python-to-JS translation had <code>#</code> comments, <code>lenght</code>, <code>Maths</code>, <code>Null</code> and Python-style loops.", fix:"Your own Python-to-JS cheat sheet, and porting code by hand."},
+  {id:"W3", t:"Explaining your own code", ev:"The recorded interview: the questions were about engine.js, and the answers didn't come out under pressure.", fix:"A say-it step in every lesson, and mock interviews in weeks 4, 8 and 12."},
+  {id:"W4", t:"Debugging on your own", ev:"Most bugs were found by the AI, not by reading the error, testing small pieces or stepping through code.", fix:"Break code on purpose, read tracebacks, use asserts and Python Tutor."},
+  {id:"W5", t:"Git and GitHub", ev:"Files uploaded as <code>engine(1).js</code>, a stale fork causing conflicts, \"Accept both\" duplicating a section, and quick delete commits that broke GitHub Pages.", fix:"Real git in a Codespace: branches, pull requests and conflicts made on purpose."},
+  {id:"W6", t:"HTML and CSS by hand", ev:"Most of the Doc Scanner and NASA site UI was AI-written, including the fixes for caching, lag and overflow on phones.", fix:"Rebuild sections by hand in CodePen, learn Flexbox and Grid, inspect with Eruda."},
   {id:"W7", t:"Scope and finishing", ev:"Big UI changes kept coming on deadline day, leaving little time to rehearse the code explanation.", fix:"A spec first, and a feature freeze 48 hours before any deadline."},
   {id:"W8", t:"Working with AI well", ev:"Asking for whole finished files, then pasting them in without reading every line.", fix:"Hints over answers, small diffs, and typing core code yourself."}
 ];
-
 const PHASES = [
- {name:"Phase 1 · Python, by hand", c:"var(--py)", weeks:[
+ {name:"Python, by hand", fig:"snake", weeks:[
   {why:"Get the basics so automatic that indentation and indexing never trip you again.", tasks:[
-   ["Install Python and VS Code. Run a hello-world script from the terminal, not an online editor.",30,["W1"]],
-   ["2D lists: build a 3×3 matrix and print row 2, column 1 and the diagonal. No AI.",45,["W1"]],
-   ["Nested loops: print a 10×10 times table. Then break the indentation on purpose and read the error.",40,["W1","W4"]],
-   ["Write dot(a, b) and transpose(m) yourself.",45,["W1"]],
-   ["Explain-back: record a 1-minute voice note explaining transpose().",15,["W3"]]]},
+   ["Run your first Python program in the browser",30,["W1"]],
+   ["2D lists: rows, columns and the diagonal",45,["W1"]],
+   ["Nested loops and indentation",40,["W1","W4"]],
+   ["Write dot() and transpose() yourself",45,["W1"]],
+   ["Explain-back: a 1-minute voice note",15,["W3"]]]},
   {why:"Learn to fix your own bugs. That's 80% of real programming.", tasks:[
-   ["Cause 5 errors on purpose (IndexError, TypeError, NameError, IndentationError, ZeroDivisionError) and write what each means.",40,["W4"]],
-   ["Add asserts that test transpose() and dot() on 3 cases each.",40,["W4"]],
-   ["Rewrite Gaussian elimination for a 3×3 system from a blank file. No AI, no peeking at engine.js.",90,["W1","W3"]],
-   ["Compare it with your old engine and list every difference.",30,["W1"]],
-   ["Solve 3 problems on the Exercism Python track.",60,["W1"]]]},
-  {why:"Your first step towards computational physics, using AI as a tutor, not a ghostwriter.", tasks:[
-   ["Add partial pivoting to your solver yourself, then ask AI to review only (not rewrite).",60,["W1","W8"]],
-   ["NumPy: arrays, slicing, np.linalg.solve. Check your solver against it.",60,["W1"]],
-   ["Mini sim: a projectile with air resistance (Euler steps), plotted with matplotlib.",90,["W1","W3"]],
-   ["Explain the projectile sim to someone at home.",15,["W3"]]]}
+   ["Read 5 errors you cause on purpose",40,["W4"]],
+   ["Test your functions with assert",40,["W4"]],
+   ["Gaussian elimination from a blank page",90,["W1","W3"]],
+   ["Step through your solver in Python Tutor",30,["W4","W1"]],
+   ["Three Exercism exercises",60,["W1"]]]},
+  {why:"Your first step towards computational physics.", tasks:[
+   ["Add partial pivoting yourself",60,["W1","W8"]],
+   ["NumPy: check your solver",60,["W1"]],
+   ["Simulate a projectile with air resistance",90,["W1","W3"]],
+   ["Teach the simulation to someone at home",15,["W3"]]]}
  ]},
- {name:"Phase 2 · JavaScript and the browser", c:"var(--js)", weeks:[
-  {why:"Same ideas, new syntax. This is where the translation mistakes happened.", tasks:[
-   ["Write your own Python-to-JS cheat sheet: comments, let/const, for loops, .length, Math, null, ===.",30,["W2"]],
-   ["Do the Phase 1 matrix exercises again in JS, in the browser console.",45,["W2"]],
-   ["Port your 3×3 solver to JS by hand. Run it with node or in the console.",60,["W2","W1"]],
-   ["DevTools: set a breakpoint inside the solver and step through one full run.",45,["W4"]],
-   ["Mock interview #1: get asked 5 questions on your solver (by AI or a friend) and record it.",30,["W3"]]]},
-  {why:"Make things move on screen. This is the core of every project you've done.", tasks:[
-   ["A page with a button that changes text (addEventListener, querySelector).",40,["W6"]],
-   ["Canvas: draw a quad with 4 draggable dots using pointer events.",90,["W2"]],
-   ["Connect your JS solver: show the 8 numbers live while dragging.",90,["W3","W1"]],
-   ["Record a 2-minute video explaining your mini page, line by line.",15,["W3"]]]}
+ {name:"JavaScript and the browser", fig:"braces", weeks:[
+  {why:"Same ideas, new spelling. This is where the translation mistakes happened.", tasks:[
+   ["Your Python-to-JS cheat sheet",30,["W2"]],
+   ["Matrices in JavaScript",45,["W2"]],
+   ["Port your solver to JavaScript",60,["W2","W1"]],
+   ["Step through JavaScript in Python Tutor",45,["W4"]],
+   ["Mock interview #1",30,["W3"]]]},
+  {why:"Make things move on screen with your finger and stylus.", tasks:[
+   ["A button that changes text",40,["W6"]],
+   ["Canvas: four draggable dots",90,["W2"]],
+   ["Show the 8 numbers live",90,["W3","W1"]],
+   ["Record a 2-minute explain video",15,["W3"]]]}
  ]},
- {name:"Phase 3 · HTML and CSS", c:"var(--web)", weeks:[
+ {name:"HTML and CSS", fig:"boxes", weeks:[
   {why:"Stop depending on AI for layout.", tasks:[
-   ["Play Flexbox Froggy and Grid Garden to the end.",60,["W6"]],
-   ["Rebuild the Doc Scanner header and nav by hand in semantic HTML.",60,["W6"]],
-   ["Make it responsive on a phone with one media query.",45,["W6"]],
-   ["DevTools Performance: record a scroll and find what costs the most.",30,["W6","W4"]]]},
+   ["Flexbox Froggy and Grid Garden",60,["W6"]],
+   ["Rebuild the Doc Scanner header by hand",60,["W6"]],
+   ["Make it work in portrait and landscape",45,["W6"]],
+   ["Inspect your page with Eruda",30,["W6","W4"]]]},
   {why:"One page that's 100% yours, from blank file to live.", tasks:[
-   ["Build a one-page portfolio by hand, no AI code (session 1: structure).",60,["W6"]],
-   ["Portfolio session 2: styling and animations (transform and opacity only).",60,["W6"]],
-   ["Learn caching: why ?v= exists and what a hard refresh does.",15,["W6","W4"]]]}
+   ["Portfolio, part 1: structure",60,["W6"]],
+   ["Portfolio, part 2: style and motion",60,["W6"]],
+   ["Why caching breaks your updates",15,["W6","W4"]]]}
  ]},
- {name:"Phase 4 · Git and teamwork", c:"var(--git)", weeks:[
+ {name:"Git and teamwork", fig:"branch", weeks:[
   {why:"No more panicking over merge conflicts or files named (1).", tasks:[
-   ["Use git locally: init, add, commit, log and diff on your portfolio.",45,["W5"]],
-   ["Branches: make a feature branch, open a pull request into your own main and merge it.",45,["W5"]],
-   ["Create a merge conflict on purpose and resolve it. Know exactly when to pick current, incoming or both.",45,["W5"]],
-   ["Deploy the portfolio to GitHub Pages and read the Actions build log.",30,["W5"]],
-   ["Mock interview #2: explain your git history and one conflict you resolved.",20,["W3","W5"]]]}
+   ["Your first Codespace: add, commit, log",45,["W5"]],
+   ["Branches and pull requests",45,["W5"]],
+   ["Make a merge conflict and fix it",45,["W5"]],
+   ["Publish with GitHub Pages",30,["W5"]],
+   ["Mock interview #2",20,["W3","W5"]]]}
  ]},
- {name:"Phase 5 · Building with AI", c:"var(--ai)", weeks:[
-  {why:"Now use AI at full speed, without losing ownership.", tasks:[
-   ["Write a one-page spec for an orbit simulator before any prompt.",30,["W7","W8"]],
-   ["You write the physics step (gravity and velocity update) yourself, with tests.",90,["W1","W3"]],
-   ["AI helps with the UI in small diffs. You read, run and test every diff.",60,["W8"]],
-   ["Keep the AI log: what it wrote and what you wrote.",15,["W8"]]]},
+ {name:"Building with AI", fig:"robot", weeks:[
+  {why:"Use AI at full speed without losing ownership.", tasks:[
+   ["Write a spec before any prompt",30,["W7","W8"]],
+   ["Write the orbit physics yourself",90,["W1","W3"]],
+   ["Let AI help with the UI, in small diffs",60,["W8"]],
+   ["Keep an honest AI log",15,["W8"]]]},
   {why:"Ship it like a pro: freeze, polish, rehearse.", tasks:[
-   ["Finish the features, then call a feature freeze. Bug fixes only.",60,["W7"]],
-   ["Write the README: how it works, the design choices and the AI declaration.",45,["W7","W8"]],
-   ["Mock interview #3: answer 10 questions on the orbit sim and score yourself.",30,["W3"]]]}
+   ["Feature freeze",60,["W7"]],
+   ["Write the README",45,["W7","W8"]],
+   ["Mock interview #3",30,["W3"]]]}
  ]},
- {name:"Phase 6 · Capstone: Doc Scanner, yours", c:"var(--accent)", weeks:[
-  {why:"Rebuild the project that beat you, and own every line this time.", tasks:[
-   ["Engine: build the 8×8 system and solver from a blank file.",90,["W1","W3"]],
-   ["Warp: backward mapping and bilinear sampling, written by you.",90,["W1","W2"]],
-   ["Validate the quad with cross products, so a bow-tie shape is rejected.",45,["W1","W4"]]]},
+ {name:"Capstone: Doc Scanner, yours", fig:"scanner", weeks:[
+  {why:"Rebuild the project that beat you, and own every line.", tasks:[
+   ["Engine: the 8×8 system",90,["W1","W3"]],
+   ["Warp: backward mapping and blending",90,["W1","W2"]],
+   ["Reject bow-ties with cross products",45,["W1","W4"]]]},
   {why:"The final test: the interview you wish you'd had.", tasks:[
-   ["Build the UI yourself in HTML and CSS: drag the dots, live scan, download.",90,["W6"]],
-   ["Push it to GitHub using branches and PRs, and deploy it.",30,["W5"]],
-   ["Final mock interview: 10 engine.js questions on camera. Compare it with the real one.",30,["W3"]]]}
+   ["Build the scanner UI",90,["W6"]],
+   ["Push with a branch and deploy",30,["W5"]],
+   ["Final mock interview on camera",30,["W3"]]]}
  ]}
 ];
 
+/* One entry per lesson, in path order. */
+const LESSONS=[
+/* 1 */{tool:"jup",learn:"Python runs your lines from top to bottom. print() shows something on screen. You don't need a laptop: JupyterLite runs real Python inside your tablet's browser.",
+ code:'print("Hello, Syed")\nname = "DailyDally"\nprint("Day 1 of", name)',
+ steps:["Open JupyterLite with the button above and tap Notebook → Python (Pyodide).","Type the code yourself (don't paste it) and run it with ▶ or Shift+Enter.","Change the text, run it again, and rename the notebook to day1."],
+ quiz:{q:'What does print("2+3") show?',o:["5","2+3","An error"],a:1,why:"The quotes make it text, so Python prints exactly what's inside them."},
+ say:"What's the difference between print(2+3) and print(\"2+3\")?"},
+/* 2 */{tool:"jup",learn:"A matrix in Python is a list of rows, read as m[row][col], and both counts start at 0. Mixing up row and column was one of the engine bugs, so this is the lesson that fixes it.",
+ code:'m = [[1, 2, 3],\n     [4, 5, 6],\n     [7, 8, 9]]\nprint(m[1])                         # row 2\nprint([row[0] for row in m])        # column 1\nprint([m[i][i] for i in range(3)])  # diagonal',
+ steps:["Type the code and run it.","Before running print(m[2][0]), predict the answer and write it in your Journal. Then check.","Print the other diagonal (3, 5, 7) without help."],
+ quiz:{q:"m = [[1, 2], [3, 4]]. What is m[1][0]?",o:["2","3","4"],a:1,why:"m[1] is the second row, [3, 4], and [0] picks its first item, 3."},
+ say:"Why does m[1][0] come from the second row?"},
+/* 3 */{tool:"jup",learn:"In Python, indentation is the structure. Every line indented under a for runs inside that loop. One wrong indent changes what the program does.",
+ code:'for i in range(1, 11):\n    line = ""\n    for j in range(1, 11):\n        line += str(i * j).rjust(4)\n    print(line)',
+ steps:["Run it: you should get a 10×10 times table.","Indent print(line) one more level, run it, and see what changes.","Remove the indent from line += ... and read the IndentationError."],
+ quiz:{q:"If print(line) sits inside the inner loop, what happens?",o:["It prints 10 lines","It prints 100 growing lines","Error"],a:1,why:"It now runs on every inner step, 10 × 10 = 100 times, each time with a longer line."},
+ say:"How does Python know which lines belong to a loop?"},
+/* 4 */{tool:"jup",learn:"A function packages steps under a name. dot() multiplies matching items and adds them up. Next you write transpose(): the new row c is the old column c.",
+ code:'def dot(a, b):\n    total = 0\n    for k in range(len(a)):\n        total += a[k] * b[k]\n    return total\n\nprint(dot([1, 2, 3], [4, 5, 6]))',
+ steps:["Type dot() and check that it prints 32.","Write transpose(m) yourself. Hint: loop over columns first, then build each new row.","Check that transpose([[1, 2], [3, 4]]) gives [[1, 3], [2, 4]]."],
+ quiz:{q:"dot([1, 2, 3], [4, 5, 6]) = ?",o:["32","21","[4, 10, 18]"],a:0,why:"1×4 + 2×5 + 3×6 = 4 + 10 + 18 = 32."},
+ say:"Walk through dot([1, 2], [3, 4]) out loud, one loop step at a time."},
+/* 5 */{tool:null,learn:"Explaining code is its own skill, and it's the one the interview tested. You train it like a muscle: short, often, without notes.",
+ code:null,
+ steps:["Open your voice recorder.","Explain transpose() in 60 seconds with no notes: what goes in, what comes out, and how the loops work.","Listen back, note where you hesitated, and record it once more."],
+ quiz:{q:"What's the best sign you understand your code?",o:["It runs","You can explain each line without notes","AI says it's right"],a:1,why:"Running proves it works. Explaining proves you understand it."},
+ say:"Give your 60-second transpose() explanation again, right now."},
+/* 6 */{tool:"jup",learn:"Read a traceback from the bottom. The last line tells you the error type and message, and the lines above it tell you where it happened.",
+ code:'nums = [1, 2, 3]\nprint(nums[3])        # IndexError\nprint("age: " + 15)   # TypeError\nprint(totl)           # NameError\nprint(10 / 0)         # ZeroDivisionError',
+ steps:["Run each line on its own.","Copy the last line of each traceback into your Journal.","Next to each one, write the fix in your own words."],
+ quiz:{q:"nums has 3 items. nums[3] gives an IndexError because…",o:["the list is empty","you asked for a 4th item","the item is the wrong type"],a:1,why:"Indexes start at 0, so the 3 items are 0, 1 and 2. Index 3 doesn't exist."},
+ say:"Which line of a traceback do you read first, and why?"},
+/* 7 */{tool:"jup",learn:"assert checks that something is true and crashes loudly if it isn't. It's a free test you can put under every function.",
+ code:'assert dot([1, 2], [3, 4]) == 11\nassert transpose([[1, 2], [3, 4]]) == [[1, 3], [2, 4]]\nprint("all tests passed")',
+ steps:["Write 3 asserts for dot() and 3 for transpose().","Break transpose on purpose and watch an assert fail.","Fix it, and keep the tests at the bottom of your notebook."],
+ quiz:{q:"What does assert 2 + 2 == 5 do?",o:["Nothing","Raises an AssertionError","Prints False"],a:1,why:"The condition is false, so Python stops with an AssertionError."},
+ say:"Why test a function before you build on top of it?"},
+/* 8 */{tool:"jup",learn:"Gaussian elimination has two phases. First, forward elimination makes zeros below the diagonal. Then back substitution solves from the last row up. Back substitution runs after the elimination loop has finished; putting it inside was the engine bug.",
+ code:'# Plan only. Write the real code yourself.\n# 1) for each column k:\n#      for each row i below k:\n#        factor = A[i][k] / A[k][k]\n#        row i -= factor * row k   (and b[i] too)\n# 2) for i from the last row up:\n#      x[i] = (b[i] - sum of A[i][j]*x[j] for j > i) / A[i][i]',
+ steps:["Start from a blank notebook, with no peeking at engine.js.","Solve 2x + y − z = 8, −3x − y + 2z = −11, −2x + y + 2z = −3. The answer is x = 2, y = 3, z = −1.","Add an assert for the answer. If you're stuck for more than 15 minutes, ask the AI for one hint only."],
+ quiz:{q:"When does back substitution run?",o:["Inside the elimination loop","After elimination finishes","Before elimination"],a:1,why:"It needs every zero below the diagonal to be in place first."},
+ say:"Explain forward elimination in 3 sentences."},
+/* 9 */{tool:"tutor",learn:"Python Tutor draws your variables and lists at every step. It's a debugger that works in any tablet browser, with no F12 needed.",
+ code:null,
+ steps:["Paste your solver into Python Tutor and tap Visualize.","Tap Next step by step and watch A change.","Stop at the first zero below the diagonal, and sketch that moment in your Journal."],
+ quiz:{q:"What does stepping show you that print() doesn't?",o:["Faster code","Every variable at every step","It fixes the bug"],a:1,why:"You see the whole state change, not just the lines you remembered to print."},
+ say:"What surprised you while stepping through?"},
+/* 10 */{tool:"exer",learn:"Exercism gives you small exercises with automatic tests that run in the browser, so it works on a tablet.",
+ code:null,
+ steps:["Sign in to Exercism with GitHub and join the Python track.","Solve Hello World and Guido's Gorgeous Lasagna, plus one more exercise.","After each one, read a community solution and note one new trick."],
+ quiz:{q:"Why read community solutions after you finish?",o:["To copy them","To learn other ways of writing it","For points"],a:1,why:"Seeing other approaches after you've solved it yourself is how style grows."},
+ say:"What's one trick you learned from someone else's solution?"},
+/* 11 */{tool:"jup",learn:"Dividing by a tiny pivot blows up rounding errors, or divides by zero. Partial pivoting fixes this: before clearing column k, swap in the row with the largest absolute value in that column.",
+ code:'p = max(range(k, n), key=lambda i: abs(A[i][k]))\nA[k], A[p] = A[p], A[k]\nb[k], b[p] = b[p], b[k]',
+ steps:["Add pivoting to your solver.","Test it on A = [[0, 1], [1, 1]], b = [1, 2]. It fails without pivoting.","Ask the AI to \"review only, don't rewrite\", then type any fixes yourself."],
+ quiz:{q:"Why choose the largest value as the pivot?",o:["It's faster","It avoids dividing by tiny numbers","Python requires it"],a:1,why:"A big divisor keeps the errors small."},
+ say:"What should your solver do if every pivot candidate is almost 0?"},
+/* 12 */{tool:"jup",learn:"NumPy gives Python fast arrays. np.linalg.solve does the same job as your solver, written in C. Comparing the two answers is how you test your solver.",
+ code:'import numpy as np\nA = np.array([[2, 1, -1], [-3, -1, 2], [-2, 1, 2]], dtype=float)\nb = np.array([8, -11, -3], dtype=float)\nprint(np.linalg.solve(A, b))\nprint(A[:, 0])   # first column',
+ steps:["Run it in JupyterLite, which has NumPy built in.","Check that np.allclose(your_answer, numpy_answer) is True.","Time both with %timeit and compare."],
+ quiz:{q:"What does A[:, 0] give?",o:["The first row","The first column","An error"],a:1,why:"':' means every row, and 0 means column 0."},
+ say:"Why write your own solver when NumPy already has one?"},
+/* 13 */{tool:"jup",learn:"Euler steps are the core of computational physics. Take a small time step dt, update the velocity from the forces, then update the position from the velocity, and repeat.",
+ code:'import matplotlib.pyplot as plt\ndt, g, k = 0.01, 9.81, 0.1\nx, y, vx, vy = 0, 0, 20, 20\nxs, ys = [], []\nwhile y >= 0:\n    vx -= k * vx * dt\n    vy -= (g + k * vy) * dt\n    x += vx * dt\n    y += vy * dt\n    xs.append(x); ys.append(y)\nplt.plot(xs, ys); plt.show()',
+ steps:["Run it and look at the curve.","Set k = 0 and compare the range with the formula v²·sin(2θ)/g.","Try dt = 0.1 and dt = 0.001, and plot both on one graph."],
+ quiz:{q:"What happens with a much bigger dt?",o:["More accurate","Less accurate","No change"],a:1,why:"Big steps skip over how the curve really bends, so the errors pile up."},
+ say:"Explain one Euler step out loud."},
+/* 14 */{tool:null,learn:"Teaching someone is the strongest test of whether you understand something. If you need jargon to explain it, part of the idea isn't clear yet.",
+ code:null,
+ steps:["Pick someone at home.","Explain the projectile simulation in 2 minutes, with no jargon.","Write down one question they asked that you couldn't answer."],
+ quiz:{q:"You can't explain it without jargon. That probably means…",o:["they aren't smart enough","you don't fully understand it yet","jargon is required"],a:1,why:"Jargon often covers the part you haven't really understood yet."},
+ say:"Repeat your no-jargon explanation now."},
+/* 15 */{tool:null,learn:"JavaScript uses the same ideas as Python, spelled differently. Your engine translation broke on exactly these spellings.",
+ code:'// comment              # comment\nlet x = 5;              x = 5\nfor (let i = 0; i < n; i++) {}   for i in range(n):\narr.length              len(arr)\nMath.sqrt(2)            math.sqrt(2)\nnull                    None\n===                     ==',
+ steps:["Write your own cheat sheet in the Journal with your stylus.","Add the 4 mistakes from your translation: #, lenght, Maths and Null.","Keep it open while you work through this unit."],
+ quiz:{q:"How do you get a list's length in JS?",o:["len(arr)","arr.length","arr.lenght"],a:1,why:"length is a property, spelled l-e-n-g-t-h."},
+ say:"Name three Python-to-JS differences without looking."},
+/* 16 */{tool:"pen",learn:"JS arrays work like Python lists. map() builds a new array by running a function on every item.",
+ code:'const m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];\nconsole.log(m[1]);\nconsole.log(m.map(row => row[0]));\nconsole.log(m.map((row, i) => row[i]));',
+ steps:["Open CodePen and show the JS panel and the Console.","Redo row, column and diagonal in JS.","Write transpose in JS and compare it with your Python version."],
+ quiz:{q:"What does m.map(row => row[0]) return?",o:["The first row","The first column","The length"],a:1,why:"It takes item 0 from every row, which is the first column."},
+ say:"How is map() like a Python list comprehension?"},
+/* 17 */{tool:"pen",learn:"Port line by line and keep the same test, so you know the two versions agree: x = 2, y = 3, z = −1.",
+ code:'console.assert(Math.abs(x[0] - 2) < 1e-9, "x should be 2");',
+ steps:["Port your Python solver to JS by hand, without AI.","Use your cheat sheet every time you're unsure.","Add console.assert checks for x, y and z."],
+ quiz:{q:'What does console.assert(false, "msg") do?',o:["Throws and stops","Logs an error message","Nothing"],a:1,why:"It logs the message but doesn't stop the program."},
+ say:"Which line was hardest to port, and why?"},
+/* 18 */{tool:"tutor",learn:"Python Tutor also runs JavaScript. Stepping through code you've just ported is the quickest way to find translation bugs.",
+ code:null,
+ steps:["Choose JavaScript in Python Tutor and paste your solver.","Step until the first row swap or elimination.","Compare it with what the Python version did at the same step."],
+ quiz:{q:"Your JS answer differs from Python. What's the best first move?",o:["Rewrite everything","Step through both and find the first step where they differ","Ask AI for new code"],a:1,why:"The first step where they differ points straight at the bug."},
+ say:"Explain the first difference you found."},
+/* 19 */{tool:null,learn:"Interview answers work best in a pattern: say what the code does, how it does it, and why you built it that way.",
+ code:null,
+ steps:["Open the AI planner and tap Mock interview, or ask a friend.","Answer 5 questions about your JS solver out loud.","Record yourself and rewatch one answer."],
+ quiz:{q:"What's a strong structure for an answer?",o:["What, how, why","Read the code out","Say AI wrote it"],a:0,why:"What, how, why shows you understand the purpose, not just the syntax."},
+ say:"Answer this: what does solve_numbers do, and why?"},
+/* 20 */{tool:"pen",learn:"Pages react through events. addEventListener connects an event, like a click, to a function that runs when it happens.",
+ code:'<button id="b">Tap me</button>\n<p id="out">Waiting…</p>\n<script>\ndocument.getElementById("b").addEventListener("click", () => {\n  document.getElementById("out").textContent = "Tapped!";\n});\n<\/script>',
+ steps:["Build it in CodePen (the HTML goes in the HTML panel).","Make it count taps: Tapped 1, Tapped 2 and so on.","Change the colour on every tap."],
+ quiz:{q:"What is addEventListener's second argument?",o:["The event name","The function to run","The element"],a:1,why:"The first argument is the event name, and the second is the function that runs."},
+ say:"What happens, step by step, when you tap the button?"},
+/* 21 */{tool:"pen",learn:"Pointer events cover a mouse, a finger and your stylus all at once. That's why the scanner's dots work everywhere.",
+ code:'canvas.addEventListener("pointerdown", e => {\n  // find the nearest dot to e.offsetX, e.offsetY\n});\ncanvas.addEventListener("pointermove", e => {\n  // if dragging, move that dot and redraw\n});',
+ steps:["Draw a four-sided shape on a canvas with 4 circles at its corners.","Drag the nearest dot with your stylus on pointerdown and pointermove.","Redraw the shape every time a dot moves."],
+ quiz:{q:"Which event works for a mouse, a finger and a stylus?",o:["click","pointermove","mousemove"],a:1,why:"Pointer events cover every kind of input."},
+ say:"How does your code know which dot you grabbed?"},
+/* 22 */{tool:"pen",learn:"Connect your JS solver to the dots, so every drag rebuilds the 8 equations and shows the new numbers.",
+ code:null,
+ steps:["On pointermove, read the 4 dot positions.","Solve for h0 to h7 and show them in a <pre>, rounded to 3 decimals.","Make the dots form a bow-tie and see what happens to the numbers."],
+ quiz:{q:"Why recompute on every pointermove?",o:["To look busy","The numbers depend on the dot positions","It's required"],a:1,why:"Each drag changes the corners, so the map changes too."},
+ say:"Why do the numbers go wild with a bow-tie?"},
+/* 23 */{tool:null,learn:"A short explain video is practice for demos and interviews.",
+ code:null,
+ steps:["Screen-record your live numbers page.","Explain it for 2 minutes: the dots, the equations, the solver, the numbers.","Watch it back once and note one thing to improve."],
+ quiz:{q:"What should a demo video open with?",o:["The code","What it does, shown live","Your setup"],a:1,why:"Show the result first, then explain how it works."},
+ say:"Give your opening line for the video."},
+/* 24 */{tool:"frog",learn:"Flexbox lines things up in one direction, and Grid places things in rows and columns. Between them they handle almost every layout.",
+ code:null,
+ steps:["Play Flexbox Froggy to level 24.","Play Grid Garden to level 28.","In your Journal, write the 5 properties you used most."],
+ quiz:{q:"In Flexbox, justify-content controls…",o:["the main axis","the cross axis","the font"],a:0,why:"justify-content controls the main axis and align-items controls the cross axis."},
+ say:"Flexbox or Grid for a nav bar? Why?"},
+/* 25 */{tool:"pen",learn:"Semantic HTML names what things are: header, nav, main. That helps screen readers and helps you read your own code later.",
+ code:'<header class="top">\n  <div class="logo">DS</div>\n  <nav>\n    <a href="#scan">Scanner</a>\n    <a href="#story">Story</a>\n  </nav>\n</header>',
+ steps:["Rebuild the Doc Scanner header in CodePen by hand.","Lay it out with Flexbox: logo on the left, links on the right.","Style it with a dark background and a yellow highlight on the active link."],
+ quiz:{q:"Which tag is semantic?",o:["<div>","<nav>","<span>"],a:1,why:"<nav> says what the element is. A <div> says nothing."},
+ say:"Why use <nav> instead of <div>?"},
+/* 26 */{tool:"pen",learn:"Media queries change styles depending on the screen. Your tablet turns, so test both portrait and landscape.",
+ code:'@media (orientation: portrait) {\n  nav { flex-direction: column; }\n}',
+ steps:["Open your header's full-page view on the tablet.","Rotate the tablet and see what breaks.","Fix it with one media query."],
+ quiz:{q:"What does @media (max-width: 600px) do?",o:["Applies styles on screens 600px wide or less","Sets the width to 600px","Hides the page"],a:0,why:"It's a condition: the styles inside apply only when it's true."},
+ say:"What did your media query change, and why?"},
+/* 27 */{tool:"eruda",learn:"A tablet has no F12 key. Eruda adds a console and an elements inspector inside your own page.",
+ code:'<script src="https://cdn.jsdelivr.net/npm/eruda"><\/script>\n<script>eruda.init();<\/script>',
+ steps:["Add Eruda to your header page.","Tap the gear button and open Elements, then inspect the nav.","Change a colour live in Eruda, then copy the fix into your CSS."],
+ quiz:{q:"Why do you need Eruda on a tablet?",o:["Speed","There's no built-in DevTools","Required by CodePen"],a:1,why:"Mobile browsers hide DevTools, and Eruda brings them back."},
+ say:"Describe how you found one bug with Eruda."},
+/* 28 */{tool:"pen",learn:"A portfolio is a page about you and your projects. Get the structure right first and style it later.",
+ code:null,
+ steps:["Plan it in your Journal: About, Projects (Doc Scanner, NASA site), Contact.","Write the HTML only, with semantic tags.","No AI code. Check the content reads well with no CSS at all."],
+ quiz:{q:"Why build the structure before styling?",o:["Styling is optional","Content decides the layout","It's faster to type"],a:1,why:"You design around real content, not around guesses."},
+ say:"Walk through your page structure."},
+/* 29 */{tool:"pen",learn:"Smooth animations change only transform and opacity, because the browser can draw those cheaply. That's what fixed the lag in Doc Scanner.",
+ code:'.card { transition: transform .2s, opacity .2s; }\n.card:hover { transform: translateY(-4px); }',
+ steps:["Style the portfolio with Flexbox or Grid.","Add one fade-in and one hover lift, using transform and opacity only.","Check it in both orientations on your tablet."],
+ quiz:{q:"Which property is cheapest to animate?",o:["width","transform","box-shadow"],a:1,why:"transform doesn't change the layout, so the browser doesn't have to recalculate it."},
+ say:"Why did backdrop-filter make Doc Scanner lag?"},
+/* 30 */{tool:null,learn:"Browsers keep old CSS and JS to load pages faster. Adding ?v=2 to a file name makes it look like a new file, so the browser fetches the update.",
+ code:'<link rel="stylesheet" href="style.css?v=2">',
+ steps:["Read the code above.","In your Journal, explain why your changes once didn't show up.","Write when you'd change v=2 to v=3."],
+ quiz:{q:"What does ?v=2 do?",o:["Makes the file version 2","Makes the browser treat it as a new file","Nothing"],a:1,why:"A different address means the browser can't use its old cached copy."},
+ say:"Explain caching to a teammate in two sentences."},
+/* 31 */{tool:"cs",learn:"A Codespace is a full computer in your browser: VS Code, a terminal and git. GitHub gives you free hours every month, so you don't need a laptop.",
+ code:'git status\ngit add .\ngit commit -m "First commit"\ngit log --oneline\ngit diff',
+ steps:["Create a repo called portfolio and upload your portfolio HTML.","Tap Code → Codespaces → Create codespace.","Edit a line and run each command above. Then stop the Codespace to save your free hours."],
+ quiz:{q:"What does git add do?",o:["Uploads to GitHub","Stages changes for the next commit","Deletes files"],a:1,why:"add stages changes, commit saves them, and push uploads them."},
+ say:"Explain add, commit and push."},
+/* 32 */{tool:"cs",learn:"A branch is a safe copy of your project to work on. A pull request asks to merge that branch back into main.",
+ code:'git switch -c feature/header\n# edit something\ngit commit -am "New header"\ngit push -u origin feature/header',
+ steps:["Make the branch and a change, then push it.","Open a pull request on GitHub.","Merge it yourself, then delete the branch."],
+ quiz:{q:"Why work on a branch?",o:["It's faster","main stays safe while you experiment","GitHub requires it"],a:1,why:"If the experiment fails, main is untouched."},
+ say:"Explain the branch → pull request → merge flow."},
+/* 33 */{tool:"cs",learn:"A conflict happens when two branches change the same lines. Current is your branch and incoming is theirs. Only choose both when both sides are really needed. That's the lesson of the duplicated \"Under the hood\".",
+ code:'<<<<<<< current\nmy line\n=======\ntheir line\n>>>>>>> incoming',
+ steps:["Make two branches that edit the same line differently.","Merge one, then the other, so you get a conflict.","Resolve it by hand and make sure no <<<<<<< marker is left."],
+ quiz:{q:"The incoming side is empty and current has your new lines. What do you pick?",o:["Incoming","Current","Both, without thinking"],a:1,why:"Picking incoming would delete your work. Current keeps it."},
+ say:"Explain what went wrong with Accept both on the hackathon."},
+/* 34 */{tool:"gh",learn:"GitHub Pages turns a repo into a live website for free.",
+ code:null,
+ steps:["In the repo's Settings → Pages, choose Deploy from branch → main.","Wait for the Actions build to turn green.","Open your live link on the tablet and share it."],
+ quiz:{q:"Your site shows an old version. What do you check first?",o:["Delete the repo","The Actions build status and a hard refresh","Rename the files"],a:1,why:"Either the build is still running or failed, or your browser is showing a cached copy."},
+ say:"Explain how your page gets from the repo to the web."},
+/* 35 */{tool:null,learn:"Mock interview #2, on git and your portfolio.",
+ code:null,
+ steps:["Use the planner's Mock interview button.","Answer 5 questions out loud.","Note your weakest answer and practise it twice."],
+ quiz:{q:"In an interview you get a question you don't know. What's best?",o:["Guess confidently","Say what you do know and how you'd find out the rest","Stay silent"],a:1,why:"Honest reasoning scores better than a confident bluff."},
+ say:"Explain a merge conflict you resolved."},
+/* 36 */{tool:null,learn:"A spec is 5 lines you write before you ask the AI for anything. It keeps you in charge of what gets built.",
+ code:'Goal: orbit simulator in the browser\nInputs: planet mass, start position, velocity\nOutputs: animated orbit + energy readout\nEdge case: crash into the planet\nTest: energy stays roughly constant',
+ steps:["Write the orbit sim spec in your Journal.","Cut anything that isn't needed for the first version.","Only after that, plan your first AI question."],
+ quiz:{q:"Why write the spec before prompting?",o:["AI needs it","It sets the scope, so you stay in charge","For marks"],a:1,why:"Without a spec, the AI decides what you're building."},
+ say:"Read your spec out loud in 30 seconds."},
+/* 37 */{tool:"pen",learn:"Gravity pulls towards the planet with a = −GM·r/|r|³. Each step, update v from a and then r from v, the same Euler idea as the projectile.",
+ code:'const r = Math.hypot(x, y);\nconst ax = -GM * x / r**3, ay = -GM * y / r**3;\nvx += ax * dt; vy += ay * dt;\nx += vx * dt;  y += vy * dt;',
+ steps:["Write the physics step yourself, with no AI.","Draw the planet and the moving dot on a canvas.","Test it: print the energy every 100 steps and check it barely changes."],
+ quiz:{q:"Why should total energy stay roughly constant?",o:["It looks nicer","Nothing in space removes energy, so a changing total means a bug","Canvas needs it"],a:1,why:"If the energy drifts a lot, dt is too big or the maths is wrong."},
+ say:"Explain your physics step line by line."},
+/* 38 */{tool:null,learn:"Now the AI can help, but only with the UI, one small change at a time. You read, run and test every change before the next one.",
+ code:'Good prompt:\n"Here is my canvas code. Suggest ONLY how to add a\nslider for planet mass. Do not change the physics."',
+ steps:["Ask for one UI feature, such as a mass slider.","Read every changed line before you use it.","Run it and test it. If you can't explain the change, don't keep it."],
+ quiz:{q:"Which prompt keeps you in control?",o:["\"Build the whole app\"","\"Add only a mass slider, don't touch the physics\"","\"Fix everything\""],a:1,why:"Small, scoped requests mean small changes you can check."},
+ say:"Explain the code the AI added."},
+/* 39 */{tool:null,learn:"An AI log makes declaring AI use and answering interview questions easy.",
+ code:'Date | What I asked | What AI gave | What I changed',
+ steps:["Start the log in your Learning log (More → Settings).","Add every AI interaction from this project.","Mark which lines of code are fully yours."],
+ quiz:{q:"Why keep an AI log?",o:["To hide AI use","To declare it honestly and remember your choices","For the AI"],a:1,why:"Being honest is easy when you have the record."},
+ say:"Summarise what the AI did and what you did."},
+/* 40 */{tool:null,learn:"A feature freeze 48 hours before a deadline means no new features, only bug fixes and practising your explanation.",
+ code:null,
+ steps:["List the features that are done and stop adding new ones.","Fix your top 3 bugs.","Spend the time you'd have spent on features rehearsing your explanation."],
+ quiz:{q:"It's 24 hours before the deadline and you have a cool new idea. What do you do?",o:["Build it","Write it down for version 2","Rewrite the UI"],a:1,why:"New code this late risks breaking what already works."},
+ say:"What did you cut, and why?"},
+/* 41 */{tool:"gh",learn:"A README explains what the project is, how it works, how to run it, and who did what, including the AI.",
+ code:'# Orbit Sim\nWhat it does …\nHow it works …\nRun it …\nAI use: …',
+ steps:["Write the README in the repo, using GitHub's editor.","Include a screenshot and the live link.","Add an honest AI declaration based on your log."],
+ quiz:{q:"What should every README have?",o:["Jokes","What it is and how to run it","Only the code"],a:1,why:"A stranger should understand the project in 30 seconds."},
+ say:"Read your README's first paragraph out loud."},
+/* 42 */{tool:null,learn:"Mock interview #3, on the orbit sim.",
+ code:null,
+ steps:["Use the planner's Mock interview button.","Answer 10 questions.","Score yourself out of 10 on clarity."],
+ quiz:{q:"The judge asks why you chose Euler steps. What's the best answer?",o:["AI chose it","It's simple and accurate enough with a small dt, and I tested the energy","No reason"],a:1,why:"Give the reason and the evidence."},
+ say:"Why did you choose Euler steps?"},
+/* 43 */{tool:"jup",learn:"Each corner (u, v) → (x, y) gives 2 equations, so 4 corners give the 8 equations for h0 to h7.",
+ code:'# for each corner:\n# [u, v, 1, 0, 0, 0, -u*x, -v*x] · h = x\n# [0, 0, 0, u, v, 1, -u*y, -v*y] · h = y',
+ steps:["Build the 8×8 matrix from 4 corner pairs in Python.","Solve it with your own solver.","Check the result against np.linalg.solve."],
+ quiz:{q:"How many equations does each corner give?",o:["1","2","4"],a:1,why:"One for x and one for y."},
+ say:"Explain where the −u·x term comes from."},
+/* 44 */{tool:"pen",learn:"Backward mapping goes through each scan pixel, works out where it lands in the photo, and blends the 4 nearest photo pixels. Every pixel gets a colour, so there are no holes.",
+ code:null,
+ steps:["Write the warp loop in JS on a canvas.","Sample at pixel centres (i + 0.5).","Add bilinear blending and compare it with nearest-pixel copying."],
+ quiz:{q:"Why map backward rather than forward?",o:["It's faster to type","Every output pixel gets a colour, so there are no holes","Forward is illegal"],a:1,why:"With forward mapping, some output pixels never get hit."},
+ say:"Explain bilinear blending in two sentences."},
+/* 45 */{tool:"pen",learn:"Take the cross product of each pair of neighbouring edges. If all four have the same sign, the shape is a proper page. If the signs are mixed, it's a bow-tie or folded in.",
+ code:'cross = (b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x);',
+ steps:["Compute the 4 cross products around the shape.","Turn the outline red if the signs are mixed.","Test it with a bow-tie and with a shape folded inwards."],
+ quiz:{q:"What do mixed signs mean?",o:["A perfect square","The shape folds or crosses itself","A big page"],a:1,why:"A proper four-sided page turns the same way at every corner."},
+ say:"Explain why a bow-tie breaks the maths."},
+/* 46 */{tool:"pen",learn:"Put it all together: draggable dots, the live warp and a download button, all yours.",
+ code:null,
+ steps:["Combine the dots, the solver, the warp and the validation.","Add a download button using canvas.toBlob.","Test it with your stylus in both orientations."],
+ quiz:{q:"Where should the heavy warp run while you drag?",o:["At full size, every move","On a smaller preview, then full size when you stop","Never"],a:1,why:"The preview keeps it smooth, and the final render keeps the quality."},
+ say:"Walk through what happens from a tap to a new scan."},
+/* 47 */{tool:"cs",learn:"Ship it the professional way: on a branch, through a pull request, then out on Pages.",
+ code:'git switch -c release\ngit commit -am "Doc Scanner, my build"\ngit push -u origin release',
+ steps:["Push your scanner on a branch.","Open a pull request and merge it.","Deploy with Pages and test the live link."],
+ quiz:{q:"Why merge through a pull request even when you work alone?",o:["It's required","It shows you a reviewable diff before it goes live","For stars"],a:1,why:"You catch mistakes before they reach main."},
+ say:"Explain your release steps."},
+/* 48 */{tool:null,learn:"The final test: the interview you wish you'd had. Record it, then compare it with the real one.",
+ code:null,
+ steps:["Ask the planner for 10 engine.js-style questions.","Answer them on camera with no notes.","Watch it next to your old interview and write down 3 ways you've improved."],
+ quiz:{q:"What's changed since the hackathon?",o:["Nothing","I can explain every line I wrote","I memorised answers"],a:1,why:"That was the goal of all 48 lessons."},
+ say:"Explain the whole Doc Scanner engine in 2 minutes."}
+];
 const REPOS=[
- ["Asabeneh/30-Days-Of-Python","Extra daily Python exercises when a Phase 1 task feels too easy","1–3"],
- ["exercism/python","The Exercism Python track (the actual exercises live on exercism.org)","2–3"],
- ["rougier/numpy-100","100 NumPy exercises, from easy to hard. Do the first 20.","3"],
- ["jakevdp/PythonDataScienceHandbook","Free book: NumPy and matplotlib chapters","3, 9–10"],
- ["TheAlgorithms/Python","Read how others write linear algebra and physics code","3, 11"],
- ["Asabeneh/30-Days-Of-JavaScript","JS basics in daily chunks, paired with your cheat sheet","4–5"],
- ["wesbos/JavaScript30","30 small vanilla JS projects, no frameworks. Do the drawing and drag ones.","5"],
+ ["Asabeneh/30-Days-Of-Python","Extra daily Python exercises when Unit 1 feels too easy","1–3"],
+ ["exercism/python","The Exercism Python track (the exercises live on exercism.org)","2–3"],
+ ["rougier/numpy-100","100 NumPy exercises. Do the first 20.","3"],
+ ["jakevdp/PythonDataScienceHandbook","Free book: the NumPy and matplotlib chapters","3, 9–10"],
+ ["TheAlgorithms/Python","How other people write linear algebra and physics code","3, 11"],
+ ["Asabeneh/30-Days-Of-JavaScript","JS basics in daily chunks","4–5"],
+ ["wesbos/JavaScript30","30 small vanilla JS projects. Try the drawing ones.","5"],
  ["getify/You-Dont-Know-JS","Free books on how JS really works. Read \"Get Started\".","4"],
- ["Asabeneh/30-Days-Of-HTML","HTML refresher before you rebuild the header","6"],
- ["thomaspark/flexboxfroggy","The Flexbox Froggy game (open-source)","6"],
- ["thomaspark/gridgarden","The Grid Garden game (open-source)","6"],
- ["mdn/content","Source of MDN, the best HTML/CSS/JS reference","4–7"],
- ["TheOdinProject/curriculum","A full free web-dev path, if you want more after Phase 3","6–7"],
+ ["Asabeneh/30-Days-Of-HTML","HTML refresher","6"],
+ ["thomaspark/flexboxfroggy","Flexbox Froggy (open source)","6"],
+ ["thomaspark/gridgarden","Grid Garden (open source)","6"],
+ ["liriliri/eruda","Console and inspector for your tablet","6–7"],
+ ["mdn/content","Source of MDN, the HTML/CSS/JS reference","4–7"],
  ["pcottle/learnGitBranching","Visual git branching game","8"],
- ["firstcontributions/first-contributions","Make your first real pull request to someone else's repo","8"],
- ["practical-tutorials/project-based-learning","Project ideas for after the roadmap","12+"],
- ["kamranahmedse/developer-roadmap","The big picture of where to go next","12+"]
+ ["firstcontributions/first-contributions","Your first pull request to someone else's repo","8"],
+ ["practical-tutorials/project-based-learning","Project ideas for after the path","12+"]
 ];
 
+const UCOL=["#7cc4f5","#f7df4f","#f39a7c","#c9a6ff","#6fe0ee","#fce42a"];
+const ICON=["⭐","📘","🧠","🔧","🎤","🏆","💡","🧪","🛠️","📈"];
+const FIG={
+ snake:'<svg viewBox="0 0 100 100"><path d="M20 78c0-18 30-12 30-30S20 30 30 16c8-10 26-6 30 4" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round"/><circle cx="62" cy="22" r="10" fill="#111"/><circle cx="65" cy="19" r="2.5" fill="#fff"/></svg>',
+ braces:'<svg viewBox="0 0 100 100"><path d="M38 12c-12 0-12 8-12 18s-4 18-12 20c8 2 12 10 12 20s0 18 12 18M62 12c12 0 12 8 12 18s4 18 12 20c-8 2-12 10-12 20s0 18-12 18" fill="none" stroke="#111" stroke-width="9" stroke-linecap="round"/></svg>',
+ boxes:'<svg viewBox="0 0 100 100" fill="none" stroke="#111" stroke-width="7"><rect x="10" y="12" width="80" height="20" rx="5"/><rect x="10" y="42" width="36" height="46" rx="5"/><rect x="54" y="42" width="36" height="20" rx="5"/><rect x="54" y="68" width="36" height="20" rx="5"/></svg>',
+ branch:'<svg viewBox="0 0 100 100" fill="none" stroke="#111" stroke-width="7"><path d="M28 14v72M28 60c0-20 44-14 44-34"/><circle cx="28" cy="14" r="9" fill="#111"/><circle cx="28" cy="86" r="9" fill="#111"/><circle cx="72" cy="22" r="9" fill="#111"/></svg>',
+ robot:'<svg viewBox="0 0 100 100"><rect x="18" y="30" width="64" height="52" rx="14" fill="#111"/><circle cx="38" cy="54" r="8" fill="#fff"/><circle cx="62" cy="54" r="8" fill="#fff"/><path d="M50 30V14" stroke="#111" stroke-width="6"/><circle cx="50" cy="12" r="6" fill="#111"/></svg>',
+ scanner:'<svg viewBox="0 0 100 100" fill="none" stroke="#111" stroke-width="6"><path d="M22 18l60 8-6 62-58-8z"/><circle cx="22" cy="18" r="7" fill="#111"/><circle cx="82" cy="26" r="7" fill="#111"/><circle cx="76" cy="88" r="7" fill="#111"/><circle cx="18" cy="80" r="7" fill="#111"/></svg>'};
 
-const UCOL=["#7cc4f5","#f0db4f","#f39a7c","#c9a6ff","#6fe0ee","#fce42a"];
-const ICONS=["⭐","📘","🧠","🔧","🎤","🏆","💡","🧪","🛠️","📈"];
-
-/* flatten: lessons in strict order */
 const WEEKS=[];PHASES.forEach((p,pi)=>p.weeks.forEach((w,wi)=>{w.phase=pi;w.tasks=w.tasks.map((t,ti)=>({id:`p${pi}w${wi}t${ti}`,text:t[0],mins:t[1],weak:t[2]}));WEEKS.push(w)}));
 WEEKS.forEach((w,i)=>w.tasks.forEach(t=>{t.week=i;t.phase=w.phase}));
-const ALL=WEEKS.flatMap(w=>w.tasks); ALL.forEach((t,i)=>t.n=i);
+const ALL=WEEKS.flatMap(w=>w.tasks);ALL.forEach((t,i)=>{t.n=i;t.L=LESSONS[i]});
 
 /* state */
 const KEY="syed-roadmap-v1";
-const DEF={done:{},check:{},start:"2026-11-28",pFrom:"2026-12-07",pTo:"2026-12-18",log:"",rem:"17:30",chat:[]};
+const DEF={done:{},check:{},start:"2026-11-28",pFrom:"2026-12-07",pTo:"2026-12-18",log:"",chat:[],v2:1};
 let S=load();
 function load(){let r=null;try{r=JSON.parse(localStorage.getItem(KEY))}catch(e){}const o=Object.assign({},DEF,r||{});
-  if(!r||!r.v2){o.start=DEF.start;o.pFrom=DEF.pFrom;o.pTo=DEF.pTo;o.v2=1;delete o.exam} return o}
+  if(!r||!r.v2){o.start=DEF.start;o.pFrom=DEF.pFrom;o.pTo=DEF.pTo;o.v2=1;delete o.exam}return o}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
 /* dates */
@@ -458,10 +774,10 @@ const fmt=d=>d.toLocaleDateString(undefined,{day:"numeric",month:"short"});
 const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 const addD=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
 const inPause=d=>S.pFrom&&S.pTo&&d>=d0(S.pFrom)&&d<=d0(S.pTo);
-function effDays(upTo){let n=0;for(let d=d0(S.start);d<=upTo;d=addD(d,1)) if(!inPause(d)) n++; return n} // active days elapsed incl. upTo
+function effDays(upTo){let n=0;for(let d=d0(S.start);d<=upTo;d=addD(d,1))if(!inPause(d))n++;return n}
 function curWeek(){const t=today();if(t<d0(S.start))return -1;return Math.floor((effDays(t)-1)/7)}
 function dateOfEff(k){let d=d0(S.start),n=0;for(let i=0;i<2000;i++){if(!inPause(d)){if(n===k)return d;n++}d=addD(d,1)}return d}
-const weekStart=i=>dateOfEff(i*7), weekEnd=i=>dateOfEff(i*7+6);
+const weekStart=i=>dateOfEff(i*7),weekEnd=i=>dateOfEff(i*7+6);
 
 /* progress */
 const isDone=t=>!!S.done[t.id];
@@ -471,9 +787,9 @@ const isUnlocked=t=>t.n===0||isDone(ALL[t.n-1])||isDone(t);
 function plannedFrac(){const cw=curWeek();if(cw<0)return 0;const dIn=(effDays(today())-1)-cw*7;let n=0;
   WEEKS.forEach((w,i)=>{if(i<cw)n+=w.tasks.length;else if(i===cw)n+=w.tasks.length*Math.min(1,(dIn+1)/7)});return Math.min(1,n/ALL.length)}
 function activeDays(){const d=new Set(Object.values(S.done).filter(v=>typeof v==="string"));Object.keys(S.check||{}).forEach(k=>d.add(k));return d}
-const isFreeze=d=>d.getDay()===5||inPause(d)||d<d0(S.start);
+const isFreeze=d=>d.getDay()===5||inPause(d);
 function streak(){const days=activeDays();let s=0,d=today();if(!days.has(iso(d)))d=addD(d,-1);
-  for(let i=0;i<500;i++){if(days.has(iso(d)))s++;else if(!isFreeze(d)||d<d0(S.start))break;d=addD(d,-1)}
+  for(let i=0;i<500;i++){if(days.has(iso(d)))s++;else if(!isFreeze(d))break;d=addD(d,-1)}
   const sorted=[...days].sort();let best=0,run=0,prev=null;
   sorted.forEach(x=>{const t=d0(x);let ok=!!prev;if(prev){for(let g=addD(prev,1);g<t;g=addD(g,1))if(!isFreeze(g)){ok=false;break}}run=ok?run+1:1;best=Math.max(best,run);prev=t});
   return {s,best:Math.max(best,s)}}
@@ -487,88 +803,134 @@ const weakPct=id=>pct(ALL.filter(t=>t.weak.includes(id)));
 /* helpers */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1900)}
-const CHEERS=["Lesson complete!","That's yours now.","Can you explain it out loud? Then it counts.","One more brick in the wall.","Pix is proud of you."];
-const cheer=()=>CHEERS[Math.floor(Math.random()*CHEERS.length)];
-function untilMidnight(){const n=new Date(),m=addD(today(),1);const ms=m-n;return `${Math.floor(ms/36e5)}h ${String(Math.floor(ms%36e5/6e4)).padStart(2,"0")}m`}
-const NAGS=["Your streak dies at midnight. Pix is watching.","45 minutes. That's one episode. Do it.","Future you, explaining engine.js perfectly, is counting on today.","No lesson, no streak. Simple maths, and you're good at maths.","The interview didn't go well. This is how the next one does."];
-
-function complete(t){S.done[t.id]=iso(today());save();toast(`+${t.mins} XP · ${cheer()}`);renderAll()}
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2000)}
+function untilMidnight(){const ms=addD(today(),1)-new Date();return `${Math.floor(ms/36e5)}h ${String(Math.floor(ms%36e5/6e4)).padStart(2,"0")}m`}
+const pix=(face,size)=>`<div class="pix ${face||""}" style="--s:${size||96}px" aria-hidden="true"><div class="body"></div><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div>`;
+const NAGS=["Your streak dies at midnight. Pix is watching.","One lesson. That's all. Go.","Future you, explaining engine.js perfectly, is counting on today.","No lesson, no streak. Simple maths, and you're good at maths."];
 
 /* ---------- LEARN ---------- */
-function renderHero(){
-  const h=$("#hero"),st=streak().s,done=doneToday(),t=today(),q=nextLesson();
+function renderToday(){
+  const el=$("#today"),st=streak().s,done=doneToday(),t=today(),q=nextLesson();
   let cls,face,title,body,btn="";
-  if(inPause(t)){cls="calm";face="sleep";title=`Paused until ${fmt(addD(d0(S.pTo),1))}.`;body=`Streak frozen at 🔥 ${st}. Nothing to do here. Pix is napping.`}
-  else if(done){cls="safe";face="happy";title=`Streak safe. 🔥 ${st}`;body="Done for today. Doing another lesson only adds XP."}
-  else if(t<d0(S.start)){cls="calm";face="";title=`Your path starts ${fmt(d0(S.start))}.`;body="Install your kit (More → Kit) and you're ready. Want a head start? Lesson 1 is unlocked."}
-  else if(!q){cls="safe";face="happy";title="Path complete. You did it.";body="Every lesson done. Pick your next project from the Kit tab."}
-  else if(done){cls="safe";face="happy";title=`Streak safe. 🔥 ${st}`;body="Done for today. Doing another lesson only adds XP."}
-  else if(t.getDay()===5){cls="calm";face="";title="Friday: rest day.";body="Skipping today won't break your streak. A lesson still earns XP."}
-  else {cls="risk";face="mad";title=st>0?`Your 🔥 ${st}-day streak is about to die.`:"Start your streak. Today.";body=`${NAGS[Math.floor(t/DAY)%NAGS.length]} <span class="clock">${untilMidnight()}</span> left.`}
-  if(q&&!inPause(t)) btn=`<div class="quest"><div class="qt">${esc(q.text)}<small>Unit ${q.phase+1} · Lesson ${q.n+1} of ${ALL.length} · ${q.mins} min · +${q.mins} XP</small></div><button class="bigbtn ${done?"green":""}" id="questBtn">Start lesson</button></div>`;
-  h.className="hero "+cls;
-  h.innerHTML=`<div class="pix ${face}" aria-hidden="true"><div class="body"></div><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div><div><h2>${title}</h2><p class="ev" style="margin:0">${body}</p>${btn}</div>`;
-  const qb=$("#questBtn");if(qb)qb.onclick=()=>openLesson(q);
+  if(inPause(t)){cls="calm";face="sleep";title=`Paused until ${fmt(addD(d0(S.pTo),1))}`;body=`Streak frozen at 🔥 ${st}. Pix is napping. Good luck in your exams.`}
+  else if(!q){cls="safe";face="happy jump";title="Path complete!";body="All 48 lessons done. You built this."}
+  else if(done){cls="safe";face="happy";title=`Streak safe 🔥 ${st}`;body="Today's done. Another lesson only adds XP."}
+  else if(t<d0(S.start)){cls="calm";face="";title=`The path starts ${fmt(d0(S.start))}`;body="Want a head start? Lesson 1 is open."}
+  else if(t.getDay()===5){cls="calm";face="";title="Friday: rest day";body="Your streak is safe today. A lesson still earns XP."}
+  else{cls="risk";face="mad";title=st>0?`Your ${st}-day streak is at risk!`:"Start your streak today";body=`${NAGS[Math.floor(t/DAY)%NAGS.length]} <span class="clock">${untilMidnight()}</span> left.`}
+  if(q&&!inPause(t))btn=`<div style="background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:12px 14px"><div class="ev" style="margin:0 0 2px">Unit ${q.phase+1} · Lesson ${q.n+1}</div><b>${esc(q.text)}</b><div class="ev">⏱ ${q.mins} min · +${q.mins} XP</div></div><button class="big ${done?"green":""}" id="startBtn">${done?"Keep going":"Start lesson"}</button>`;
+  el.className="card today "+cls;
+  el.innerHTML=`<div class="row">${pix(face,78)}<div><h3>${title}</h3><p class="ev" style="margin:4px 0 0">${body}</p></div></div>${btn}`;
+  const b=$("#startBtn");if(b)b.onclick=()=>startLesson(q);
+}
+function renderGoal(){
+  const done=doneToday(),C=2*Math.PI*30;
+  $("#goal").innerHTML=`<svg width="74" height="74" viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="#1c1f27" stroke-width="10"/><circle class="fg" cx="37" cy="37" r="30" fill="none" stroke="${done?"#58cc02":"#fce42a"}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${done?0:C*0.98}" transform="rotate(-90 37 37)"/><text x="37" y="43" text-anchor="middle" font-size="20" font-weight="900" fill="#f2f1ec">${done?"✓":"0/1"}</text></svg><div><h3>Daily goal</h3><p class="ev" style="margin:0">${done?"Done! Come back tomorrow.":"1 lesson a day keeps the streak alive."}</p></div>`;
+  const mon=mondayOf(today()),days=activeDays(),L="MTWTFSS";
+  $("#dots").innerHTML=[...Array(7)].map((_,i)=>{const d=addD(mon,i),hit=days.has(iso(d)),fr=!hit&&isFreeze(d)&&d<=today();return `<span class="${hit?"hit":fr?"frz":""} ${iso(d)===iso(today())?"now":""}" style="animation-delay:${i*.06}s" title="${fmt(d)}">${hit?"✓":fr?"❄":L[i]}</span>`}).join("");
+}
+function renderUnitCard(){
+  const q=nextLesson()||ALL[ALL.length-1],p=PHASES[q.phase],pt=p.weeks.flatMap(w=>w.tasks);
+  $("#unitCard").innerHTML=`<h3>Unit ${q.phase+1}: ${esc(p.name)}</h3><div class="bar" style="margin:10px 0 6px"><i style="width:${pct(pt)}%;background:${UCOL[q.phase]}"></i></div><div class="lvl">${pt.filter(isDone).length}/${pt.length} lessons · ${pct(ALL)}% of the whole path</div>`;
 }
 function renderPath(){
-  const box=$("#path");box.innerHTML="";const cur=nextLesson();
-  const X=[0,52,82,52,0,-52,-82,-52];let k=0;
+  const box=$("#path");box.innerHTML="";const cur=nextLesson();const X=[0,56,88,56,0,-56,-88,-56];let k=0;
   PHASES.forEach((p,pi)=>{
     const pt=p.weeks.flatMap(w=>w.tasks),locked=!isUnlocked(pt[0]);
     const u=document.createElement("div");u.className="unit"+(locked?" locked":"");u.style.setProperty("--uc",UCOL[pi]);
-    u.innerHTML=`<div><b>Unit ${pi+1}</b><span>${esc(p.name.replace(/^Phase \d+ · /,""))}</span></div><em>${pct(pt)}%</em>`;box.appendChild(u);
-    p.weeks.forEach(w=>{
-      const wi=WEEKS.indexOf(w);const lab=document.createElement("div");lab.className="wklabel";
-      const ws=weekStart(wi),we=weekEnd(wi),pz=S.pFrom&&d0(S.pFrom)>ws&&d0(S.pFrom)<=we;
-      lab.textContent=`Week ${wi+1} · ${fmt(ws)} – ${fmt(we)}${pz?` · ❄ paused ${fmt(d0(S.pFrom))}–${fmt(d0(S.pTo))}`:""}`;box.appendChild(lab);
+    u.innerHTML=`<div style="position:relative;z-index:1"><small>Unit ${pi+1}</small><span>${esc(p.name)}</span></div>${FIG[p.fig].replace("<svg",'<svg class="fig"')}<em>${pct(pt)}%</em>`;box.appendChild(u);
+    p.weeks.forEach((w,wiLocal)=>{
+      const wi=WEEKS.indexOf(w),ws=weekStart(wi),we=weekEnd(wi),pz=S.pFrom&&d0(S.pFrom)>ws&&d0(S.pFrom)<=we;
+      const lab=document.createElement("div");lab.className="wklabel";lab.textContent=`Week ${wi+1} · ${fmt(ws)} – ${fmt(we)}${pz?" · ❄ exam pause":""}`;box.appendChild(lab);
       const path=document.createElement("div");path.className="path";
-      w.tasks.forEach(t=>{const b=document.createElement("button");const st=isDone(t)?"done":isUnlocked(t)?"open":"locked";
-        b.className="node "+st+(cur&&cur.id===t.id?" current":"");b.style.setProperty("--uc",UCOL[pi]);b.style.setProperty("--x",X[k++%8]+"px");
-        b.textContent=st==="done"?"✓":st==="locked"?"🔒":ICONS[t.n%ICONS.length];b.setAttribute("aria-label",`Lesson ${t.n+1}: ${t.text} (${st})`);
-        b.onclick=()=>openLesson(t);path.appendChild(b)});
+      if(wiLocal===0){const d=document.createElement("div");d.className="deco";d.style.cssText=`${pi%2?"left":"right"}:2%;top:40px;color:${UCOL[pi]}`;d.innerHTML=FIG[p.fig].replace(/#111/g,UCOL[pi]);path.appendChild(d)}
+      w.tasks.forEach((t,j)=>{const b=document.createElement("button");const st=isDone(t)?"done":isUnlocked(t)?"open":"locked";
+        b.className="node "+st+(cur&&cur.id===t.id?" current":"");b.style.setProperty("--uc",UCOL[pi]);b.style.setProperty("--x",X[k++%8]+"px");b.style.setProperty("--d",(j*.07)+"s");
+        b.innerHTML=(st==="done"?"✓":st==="locked"?"🔒":ICON[t.n%ICON.length])+(cur&&cur.id===t.id?`<span class="tip">${doneToday()||today()<d0(S.start)?"NEXT":"START"}</span>`:"");
+        b.setAttribute("aria-label",`Lesson ${t.n+1}: ${t.text}, ${st}`);
+        b.onclick=()=>{if(st==="locked"){b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake");toast(`🔒 Finish lesson ${t.n} first`);return}startLesson(t)};
+        path.appendChild(b)});
       box.appendChild(path);
     });
   });
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll(".node").forEach(n=>io.observe(n));
 }
-let tutorAbort=null;
-function openLesson(t){
-  const d=$("#lesson"),open=isUnlocked(t),done=isDone(t),wk=WEEKS[t.week];
-  const weakTxt=t.weak.map(id=>{const w=WEAK.find(x=>x.id===id);return `<span class="chip">${id} ${esc(w.t)}</span>`}).join(" ");
-  $("#lessonBody").innerHTML=`<p class="ev" style="margin:0">Unit ${t.phase+1} · Week ${t.week+1} · Lesson ${t.n+1} of ${ALL.length}</p>
-   <h2 style="margin:6px 0 8px">${esc(t.text)}</h2><p class="ev">${esc(wk.why)}</p><div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">${weakTxt}</div>
-   <p class="ev">⏱ ${t.mins} min · +${t.mins} XP. It only counts if you can explain it out loud without notes.</p>
-   ${open?"":`<p class="ev" style="color:var(--warn)">🔒 Locked. Finish lesson ${t.n} first. Lessons unlock in order, like levels.</p>`}
-   <div id="tutorBox"></div>
-   <div class="controls" style="margin-top:16px;justify-content:space-between">
-     <div class="controls"><button class="btn" id="lClose">Close</button><button class="btn" id="lTutor" hidden>🤖 Give me a hint</button></div>
-     ${done?`<button class="btn" id="lUndo">Mark not done</button>`:`<button class="bigbtn" id="lDone" ${open?"":"disabled"}>Complete ✓</button>`}
-   </div>`;
-  $("#lClose").onclick=()=>d.close();
-  if($("#lDone"))$("#lDone").onclick=()=>{d.close();complete(t)};
-  if($("#lUndo"))$("#lUndo").onclick=()=>{delete S.done[t.id];save();d.close();renderAll()};
-  getSample().then(sample=>{const b=$("#lTutor");if(!sample||!b)return;b.hidden=false;b.onclick=()=>tutor(t,sample)});
-  if(!d.open)d.showModal();
+
+/* ---------- LESSON FLOW ---------- */
+let LV=null;
+const STEPS=["learn","do","check","say","done"];
+function startLesson(t){
+  if(inPause(today())&&!isDone(t)){toast("💤 The path is paused for your exams");return}
+  LV={t,step:0,ticks:new Set(),pick:null,state:"idle",review:isDone(t),tries:0};
+  $("#lv").classList.add("on");document.body.style.overflow="hidden";renderStep();
 }
-async function tutor(t,sample){
-  const box=$("#tutorBox");box.innerHTML=`<div class="tutor">Thinking…</div>`;const out=box.firstChild;
-  if(tutorAbort)tutorAbort.abort();tutorAbort=new AbortController();
-  try{await sample(`You are a patient coding tutor for Syed, a Year 11 student in Lahore who knows some Python and JS but struggles with indexing, translating Python to JS, and explaining his own code. Today's lesson: "${t.text}". Give a short starting hint, a tiny example that is NOT the full answer, one common mistake to avoid, and one question he should be able to answer out loud afterwards. Plain text, under 180 words. Never write the full solution.`,{signal:tutorAbort.signal,cache:false,onText:({text})=>{out.textContent=text}})}
-  catch(e){out.textContent=e&&e.code==="rate_limited"?"Too many requests. Try again in a minute.":"The hint couldn't load right now."}
+function closeLesson(){$("#lv").classList.remove("on");document.body.style.overflow="";LV=null;renderAll()}
+$("#lvX").onclick=closeLesson;
+function setFoot(kind,html,label,cls,disabled){const f=$("#lvFoot");f.className="lv-foot "+(kind||"");$("#lvFb").innerHTML=html||"";const g=$("#lvGo");g.textContent=label;g.className="big "+(cls||"");g.disabled=!!disabled}
+function renderStep(){
+  const {t,step}=LV,L=t.L,s=STEPS[step],b=$("#lvBody");
+  $("#lvBar").style.width=(step/4*100)+"%";$("#lvXp").textContent=LV.review?"Review":`+${t.mins} XP`;
+  const tool=L.tool&&TOOLS[L.tool]?`<a class="toolbtn" href="${TOOLS[L.tool][1]}" target="_blank" rel="noopener">↗ Open ${esc(TOOLS[L.tool][0])}</a>`:"";
+  b.parentElement.scrollTop=0;
+  if(s==="learn"){
+    b.innerHTML=`<div class="lv-kicker">Unit ${t.phase+1} · Lesson ${t.n+1} of ${ALL.length}</div><h2>${esc(t.text)}</h2>
+      <div class="speech">${pix("",72)}<div class="bubble">${esc(L.learn)}</div></div>
+      ${L.code?`<pre class="code">${esc(L.code)}</pre>`:""}${tool?`<p>${tool}</p>`:""}`;
+    setFoot("","<span class='ev'>Read it, then try it yourself.</span>","Continue","");
+  } else if(s==="do"){
+    b.innerHTML=`<div class="lv-kicker">Your turn · about ${t.mins} min</div><h2>Do these on your tablet</h2>${tool?`<p>${tool}</p>`:""}
+      <ul class="steps">${L.steps.map((x,i)=>`<li><button data-i="${i}" aria-pressed="${LV.ticks.has(i)}"><b>✓</b><span>${esc(x)}</span></button></li>`).join("")}</ul>
+      <p class="ev">Tap each step when it's done. No copy-pasting, so it stays yours.</p>`;
+    b.querySelectorAll(".steps button").forEach(btn=>btn.onclick=()=>{const i=+btn.dataset.i;LV.ticks.has(i)?LV.ticks.delete(i):LV.ticks.add(i);btn.setAttribute("aria-pressed",LV.ticks.has(i));upd()});
+    const upd=()=>{const all=LV.ticks.size===L.steps.length;setFoot("",`<span class="ev">${LV.ticks.size}/${L.steps.length} steps done</span>`,"Continue","",!all)};upd();
+  } else if(s==="check"){
+    const Q=L.quiz;
+    b.innerHTML=`<div class="lv-kicker">Quick check</div><h2>${esc(Q.q)}</h2><div class="opts">${Q.o.map((o,i)=>`<button data-i="${i}" aria-pressed="false"><kbd>${i+1}</kbd>${esc(o)}</button>`).join("")}</div>`;
+    LV.pick=null;LV.state="idle";
+    b.querySelectorAll(".opts button").forEach(btn=>btn.onclick=()=>{if(LV.state!=="idle")return;LV.pick=+btn.dataset.i;b.querySelectorAll(".opts button").forEach(x=>x.setAttribute("aria-pressed",x===btn));setFoot("","","Check","",false)});
+    setFoot("","","Check","",true);
+  } else if(s==="say"){
+    b.innerHTML=`<div class="lv-kicker">Say it out loud</div><h2>Explain it, no notes</h2>
+      <div class="speech">${pix("",72)}<div class="bubble"><b>${esc(L.say)}</b><br><span class="ev">Say your answer out loud, or record a voice note. This is the interview skill.</span></div></div>
+      <div class="mic">🎙️</div><div id="sayAi"></div>`;
+    setFoot("","","I explained it","green");
+    getSample().then(sm=>{const box=$("#sayAi");if(!sm||!box||!LV)return;box.innerHTML=`<textarea id="sayTxt" placeholder="Optional: type your explanation and get feedback from Claude"></textarea><p><button class="btn" id="sayBtn">Get feedback</button></p><div id="sayOut" class="bubble" hidden style="white-space:pre-wrap"></div>`;
+      $("#sayBtn").onclick=async()=>{const txt=$("#sayTxt").value.trim();if(!txt)return;const o=$("#sayOut");o.hidden=false;o.textContent="Thinking…";
+        try{await sm(`You are a friendly coding interviewer. The student (Year 11, Lahore) was asked: "${L.say}" about the lesson "${t.text}". Their answer: "${txt}". In under 90 words: say what was right, the one thing missing or wrong, and one follow-up question a judge might ask. Plain text.`,{cache:false,onText:({text})=>{o.textContent=text}})}catch(e){o.textContent="Feedback couldn't load right now."}}});
+  } else {
+    const st=streak().s;
+    b.innerHTML=`<div class="done-screen">${pix("happy jump",130).replace('class="pix','style="margin:0 auto" class="pix')}<h2>${LV.review?"Review complete!":"Lesson complete!"}</h2><p class="ev">${esc(t.text)}</p>
+      <div class="tiles"><div class="tile" style="--tc:#fce42a;--d:.1s"><small>XP</small><b id="tXp">+0</b></div><div class="tile" style="--tc:#ff9600;--d:.25s"><small>Streak</small><b>🔥 ${st}</b></div><div class="tile" style="--tc:#58cc02;--d:.4s"><small>Path</small><b>${ALL.filter(isDone).length}/${ALL.length}</b></div></div></div>`;
+    $("#lvBar").style.width="100%";setFoot("","","Continue","green");
+    countUp($("#tXp"),LV.review?0:t.mins);confetti();
+  }
 }
+$("#lvGo").onclick=()=>{
+  if(!LV)return;const s=STEPS[LV.step];
+  if(s==="check"&&LV.state==="idle"){const Q=LV.t.L.quiz,ok=LV.pick===Q.a;LV.state=ok?"ok":"no";
+    document.querySelectorAll(".opts button").forEach((x,i)=>{if(i===LV.pick)x.classList.add(ok?"right":"wrong");if(ok&&i===Q.a)x.classList.add("right")});
+    if(ok)setFoot("ok",`<div class="ico">🎉</div><div><strong>${["Nice!","Correct!","Exactly!","You got it!"][LV.t.n%4]}</strong><p>${esc(Q.why)}</p></div>`,"Continue","green");
+    else{LV.tries++;setFoot("no",`<div class="ico">💡</div><div><strong>Not quite</strong><p>${LV.tries>1?esc(Q.why):"Think about it once more."}</p></div>`,"Try again","red")}
+    return}
+  if(s==="check"&&LV.state==="no"){renderStep();return}
+  if(s==="say"&&!LV.review){S.done[LV.t.id]=iso(today());save();pushWidget()}
+  if(s==="done"){closeLesson();return}
+  LV.step++;renderStep();
+};
+function countUp(el,to){const t0=performance.now();(function f(n){const p=Math.min(1,(n-t0)/900);el.textContent="+"+Math.round(to*p*(2-p));if(p<1)requestAnimationFrame(f)})(t0)}
+function confetti(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const c=$("#confetti"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;
+  const cols=["#fce42a","#58cc02","#1cb0f6","#ff4b4b","#c9a6ff","#ff9600"];const P=[...Array(140)].map(()=>({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*16,vy:-Math.random()*14-4,r:Math.random()*6+4,c:cols[Math.random()*6|0],a:Math.random()*6}));
+  const t0=performance.now();(function f(n){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.vy+=.45;p.x+=p.vx;p.y+=p.vy;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});
+    if(n-t0<2200)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})(t0)}
 
 /* ---------- PROGRESS ---------- */
 function renderProg(){
   const done=pct(ALL),plan=Math.round(plannedFrac()*100);
   $("#sDone").textContent=done+"%";$("#sDoneBar").style.width=done+"%";$("#sPlanMark").style.left=plan+"%";
-  let cls,msg;const gap=done-plan;
-  if(inPause(today())){cls="s-idle";msg="Paused: schedule frozen"}
-  else if(curWeek()<0){cls="s-idle";msg="Not started yet"}
-  else if(gap>=5){cls="s-good";msg=`Ahead by ${gap}%`}else if(gap>=-5){cls="s-good";msg="On track"}
-  else if(gap>=-15){cls="s-warn";msg=`Behind by ${-gap}%. Catch up at the weekend.`}else{cls="s-bad";msg=`Behind by ${-gap}%. Move the start date in Settings; that's allowed.`}
-  $("#sStatus").innerHTML=`<span class="status ${cls}">${msg}</span>`;
+  const gap=done-plan;$("#sStatus").textContent=inPause(today())?"Paused: schedule frozen":curWeek()<0?"Not started yet":gap>=5?`Ahead by ${gap}%`:gap>=-5?"On track":gap>=-15?`Behind by ${-gap}%. Catch up at the weekend.`:`Behind by ${-gap}%. Move the start date in Settings; that's allowed.`;
   const st=streak();$("#sStreak").textContent=st.s;$("#sBest").textContent=`Best: ${st.best} · ❄ Fridays and the pause are freezes`;
-  $("#cStreak").textContent="🔥 "+st.s;$("#cStreak").className=doneToday()?"":"off";
+  $("#cStreak").textContent="🔥 "+st.s;$("#cStreak").className=doneToday()?"":"cold";
   const fixed=WEAK.filter(w=>weakPct(w.id)===100).length;$("#sWeak").textContent=`${fixed}/${WEAK.length}`;
   const low=[...WEAK].sort((a,b)=>weakPct(a.id)-weakPct(b.id))[0];$("#sNext").textContent=`Weakest: ${low.id} ${low.t} (${weakPct(low.id)}%)`;
   const xp=xpTotal(),L=Math.floor(xp/300)+1,into=xp%300;$("#cXp").textContent=xp;
@@ -576,52 +938,52 @@ function renderProg(){
   const w=xpWeeks(),thisW=iso(mondayOf(today())),lastW=iso(addD(mondayOf(today()),-7));
   const past=Object.entries(w).filter(([k])=>k!==thisW).map(([,v])=>v);const best=past.length?Math.max(...past):0;
   const rows=[["🥇 Your best week",best],["You, this week",w[thisW]||0],["You, last week",w[lastW]||0]].sort((a,b)=>b[1]-a[1]);
-  $("#league").innerHTML=rows.map(([n,v])=>`<li class="${n.startsWith("You, this")?"me":""}"><span>${n}</span><span>${v} XP</span></li>`).join("")+
-   `<li style="background:none;color:var(--mute);padding:6px 2px">${(w[thisW]||0)>best&&best>0?"New personal record!":best>0?`${best-(w[thisW]||0)+1} XP to beat your best week.`:"Earn XP to set your first record."}</li>`;
-  const mon=mondayOf(today()),days=activeDays(),L2="MTWTFSS";
-  $("#dots").innerHTML=[...Array(7)].map((_,i)=>{const d=addD(mon,i);const hit=days.has(iso(d));const fr=!hit&&isFreeze(d)&&d<=today();return `<span class="${hit?"hit":fr?"frz":""} ${iso(d)===iso(today())?"now":""}" title="${fmt(d)}">${hit?"✓":fr?"❄":L2[i]}</span>`}).join("");
+  $("#league").innerHTML=rows.map(([n,v])=>`<li class="${n.startsWith("You, this")?"me":""}"><span>${n}</span><span>${v} XP</span></li>`).join("");
   const ch=$("#chart");ch.innerHTML="";const cw=curWeek(),dIn=cw<0?0:(effDays(today())-1)-cw*7;
   WEEKS.forEach((wk,i)=>{const planned=i<cw?100:i===cw?Math.round(Math.min(1,(dIn+1)/7)*100):0,actual=pct(wk.tasks);
     const c=document.createElement("div");c.className="col";c.title=`Week ${i+1}: planned ${planned}%, done ${actual}%`;
     c.innerHTML=`<div class="stack"><div class="pl" style="height:${planned}%"></div><div class="ac" style="height:${actual}%"></div></div><small>W${i+1}</small>`;ch.appendChild(c)});
   const box=$("#weakList");box.innerHTML="";
-  WEAK.forEach(w=>{const p=weakPct(w.id),n=ALL.filter(t=>t.weak.includes(w.id));const lv=p===100?"Fixed":p>=60?"Getting strong":p>=25?"Improving":"Still weak";
+  WEAK.forEach(wk=>{const p=weakPct(wk.id),n=ALL.filter(t=>t.weak.includes(wk.id));const lv=p===100?"Fixed":p>=60?"Getting strong":p>=25?"Improving":"Still weak";
     const c=document.createElement("div");c.className="card";
-    c.innerHTML=`<div><h3><span>${w.id}</span>${w.t}</h3><p class="ev"><b style="color:var(--ink)">Evidence:</b> ${w.ev}</p><p class="ev"><b style="color:var(--good)">Fix:</b> ${w.fix}</p></div><div><div class="bar"><i style="width:${p}%"></i></div><div class="lvl">${lv} · ${n.filter(isDone).length}/${n.length} lessons</div></div>`;box.appendChild(c)});
+    c.innerHTML=`<div><h3><span>${wk.id}</span>${wk.t}</h3><p class="ev"><b style="color:var(--ink)">Evidence:</b> ${wk.ev}</p><p class="ev"><b style="color:var(--good)">Fix:</b> ${wk.fix}</p></div><div><div class="bar"><i style="width:${p}%"></i></div><div class="lvl">${lv} · ${n.filter(isDone).length}/${n.length} lessons</div></div>`;box.appendChild(c)});
 }
+
+/* ---------- WIDGET BRIDGE (Android app only) ---------- */
+let wT;function pushWidget(){clearTimeout(wT);wT=setTimeout(()=>{try{
+  const C=window.Capacitor;if(!C||typeof C.nativePromise!=="function")return;
+  const q=nextLesson(),st=streak(),days=activeDays(),last=[...days].sort().pop()||"";
+  const unit=q?PHASES[q.phase]:PHASES[5],ut=unit.weeks.flatMap(w=>w.tasks);
+  C.nativePromise("WidgetBridge","update",{data:JSON.stringify({streak:st.s,best:st.best,last,xp:xpTotal(),level:Math.floor(xpTotal()/300)+1,
+    next:q?q.text:"Path complete!",nextNum:q?q.n+1:48,mins:q?q.mins:0,unit:`Unit ${(q?q.phase:5)+1}: ${unit.name}`,unitPct:pct(ut),pct:pct(ALL),done:ALL.filter(isDone).length,pFrom:S.pFrom||"",pTo:S.pTo||"",start:S.start})}).catch(()=>{})}catch(e){}},300)}
 
 /* ---------- PLANNER ---------- */
 let _sample;function getSample(){if(_sample!==undefined)return Promise.resolve(_sample);
   if(!window.claude||typeof window.claude.use!=="function"){_sample=null;return Promise.resolve(null)}
   return window.claude.use("sample").then(s=>(_sample=s||null)).catch(()=>(_sample=null))}
-function context(){
-  const q=nextLesson(),st=streak(),done=ALL.filter(isDone).length;
-  const weak=WEAK.map(w=>`${w.id} ${w.t}: ${weakPct(w.id)}%`).join("; ");
+function context(){const q=nextLesson(),st=streak(),done=ALL.filter(isDone).length;
   const upcoming=ALL.filter(t=>!isDone(t)).slice(0,8).map(t=>`L${t.n+1} (${t.mins} min): ${t.text}`).join("\n");
   const last=ALL.filter(isDone).sort((a,b)=>(S.done[b.id]>S.done[a.id]?1:-1))[0];
-  return `CONTEXT (from Syed's Builder Roadmap app)
-Today: ${iso(today())} (${today().toLocaleDateString("en-GB",{weekday:"long"})}). Syed is a Year 11 student in Lahore, Pakistan, juggling school.
-Path start: ${S.start}. Exam pause: ${S.pFrom} to ${S.pTo} (no lessons; streak frozen). Fridays are rest days.
-Lessons done: ${done}/${ALL.length} (${pct(ALL)}%). Planned by today: ${Math.round(plannedFrac()*100)}%. Streak: ${st.s} days (best ${st.best}). Done today: ${doneToday()?"yes":"no"}.
+  return `CONTEXT (from Syed's DailyDally app)
+Today: ${iso(today())} (${today().toLocaleDateString("en-GB",{weekday:"long"})}). Syed is a Year 11 student in Lahore with ONLY a Huawei MatePad tablet and stylus (no laptop); he codes in the browser (JupyterLite, CodePen, Python Tutor, GitHub Codespaces).
+Path start: ${S.start}. Exam pause: ${S.pFrom} to ${S.pTo}. Fridays are rest days.
+Lessons done: ${done}/${ALL.length}. Planned by today: ${Math.round(plannedFrac()*100)}%. Streak: ${st.s} (best ${st.best}). Done today: ${doneToday()?"yes":"no"}.
 Last completed lesson: ${last?last.text:"none yet"}.
-Next lessons, in strict order:
+Next lessons in order:
 ${upcoming||"none, path complete"}
-Weak points (percent fixed): ${weak}.
-Time budget: weekdays about 45 min, Saturday 90 min, Sunday 30 min, Friday rest.`}
-const SYS=`You are Syed's AI study planner inside his Builder Roadmap app. Be direct and concrete, a bit pushy like a coach, never insulting. Plans must respect the lesson order, the exam pause, Fridays off and his time budget. When asked to quiz him, ask one question at a time and wait. Never write full solutions to lessons; give hints. Keep answers under 200 words, plain text, no markdown tables.`;
+Weak points (% fixed): ${WEAK.map(w=>`${w.id} ${w.t}: ${weakPct(w.id)}%`).join("; ")}.
+Time budget: weekdays ~45 min, Saturday 90, Sunday 30, Friday rest.`}
+const SYS=`You are Syed's AI study planner inside his DailyDally app. Be direct, concrete and a bit pushy like a coach, never insulting. Respect lesson order, the exam pause, Fridays off, his time budget, and that he has only a tablet. When quizzing, ask one question at a time. Never write full lesson solutions; give hints. Under 200 words, plain text.`;
 function renderChat(){const c=$("#chat");c.innerHTML="";
-  if(!S.chat.length){const m=document.createElement("div");m.className="msg ai";m.textContent="Hi Syed. I can see your whole path. What do you need: a plan for the week, a quick quiz, or help fitting lessons around school?";c.appendChild(m)}
+  if(!S.chat.length){const m=document.createElement("div");m.className="msg ai";m.textContent="Hi Syed! I can see your whole path. Plan the week, quick quiz, or fit lessons around school?";c.appendChild(m)}
   S.chat.forEach(x=>{const m=document.createElement("div");m.className="msg "+(x.role==="user"?"me":"ai");m.textContent=x.content;c.appendChild(m)});c.scrollTop=c.scrollHeight}
 let busy=false;
-async function ask(text){
-  const sample=await getSample();if(!sample||busy||!text.trim())return;busy=true;$("#send").disabled=true;
-  S.chat.push({role:"user",content:text.trim()});renderChat();
-  const m=document.createElement("div");m.className="msg ai";m.textContent="Thinking…";$("#chat").appendChild(m);
+async function ask(text){const sample=await getSample();if(!sample||busy||!text.trim())return;busy=true;$("#send").disabled=true;
+  S.chat.push({role:"user",content:text.trim()});renderChat();const m=document.createElement("div");m.className="msg ai";m.textContent="Thinking…";$("#chat").appendChild(m);
   const hist=S.chat.slice(-12).map((x,i,a)=>i===a.length-1?{role:"user",content:`${SYS}\n\n${context()}\n\nSyed says: ${x.content}`}:x);
   try{const r=await sample(hist,{cache:false,onText:({text})=>{m.textContent=text;$("#chat").scrollTop=1e9}});S.chat.push({role:"assistant",content:r.text});save()}
-  catch(e){m.textContent=e&&e.code==="rate_limited"?"Too many requests right now. Try again in a minute.":e&&e.code==="not_granted"?"Claude access wasn't allowed for this page.":"Couldn't reach Claude. Try again.";S.chat.pop()}
-  busy=false;$("#send").disabled=false;renderChat();
-}
+  catch(e){m.textContent=e&&e.code==="rate_limited"?"Too many requests right now. Try again in a minute.":"Couldn't reach Claude. Try again.";S.chat.pop()}
+  busy=false;$("#send").disabled=false;renderChat()}
 $("#send").onclick=()=>{const v=$("#ask").value;$("#ask").value="";ask(v)};
 $("#ask").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("#send").click()}});
 document.querySelectorAll(".suggest button").forEach(b=>b.onclick=()=>ask(b.dataset.q));
@@ -629,98 +991,71 @@ $("#clearChat").onclick=()=>{S.chat=[];save();renderChat()};
 $("#copyCtx").onclick=async()=>{const txt=`${SYS}\n\n${context()}\n\nPlan my week.`;try{await navigator.clipboard.writeText(txt);toast("Copied. Paste it into Claude")}catch(e){prompt("Copy this:",txt)}};
 getSample().then(s=>{$("#planOn").hidden=!s;$("#planOff").hidden=!!s;if(s)renderChat()});
 
-/* ---------- JOURNAL (canvas + IndexedDB) ---------- */
+/* ---------- JOURNAL ---------- */
 const DB={db:null,open(){return new Promise(r=>{try{const q=indexedDB.open("roadmap-journal",1);q.onupgradeneeded=()=>q.result.createObjectStore("pages",{keyPath:"id"});q.onsuccess=()=>{this.db=q.result;r(this.db)};q.onerror=()=>r(null)}catch(e){r(null)}})},
   tx(m){return this.db.transaction("pages",m).objectStore("pages")},
   all(){return new Promise(r=>{if(!this.db)return r([]);const q=this.tx("readonly").getAll();q.onsuccess=()=>r(q.result||[]);q.onerror=()=>r([])})},
   put(p){return new Promise(r=>{if(!this.db)return r();const q=this.tx("readwrite").put(p);q.onsuccess=q.onerror=()=>r()})},
   del(id){return new Promise(r=>{if(!this.db)return r();const q=this.tx("readwrite").delete(id);q.onsuccess=q.onerror=()=>r()})}};
-const cv=$("#ink"),ctx=cv.getContext("2d");const PW=1200,PH=1600;cv.width=PW;cv.height=PH;
+const cv=$("#ink"),ctx=cv.getContext("2d"),PW=1200,PH=1600;cv.width=PW;cv.height=PH;
 const COLORS=["#111111","#1d4ed8","#dc2626","#15803d","#a16207"];
 let J={tool:"pen",color:COLORS[0],size:3,palm:true,page:null,strokes:[],cur:null};
 try{const pj=JSON.parse(localStorage.getItem(KEY+"-j")||"{}");if(typeof pj.palm==="boolean")J.palm=pj.palm}catch(e){}
-function drawLines(){ctx.save();ctx.fillStyle="#fbfaf5";ctx.fillRect(0,0,PW,PH);ctx.strokeStyle="#dfe6f1";ctx.lineWidth=2;
-  for(let y=120;y<PH;y+=56){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(PW,y);ctx.stroke()}ctx.strokeStyle="#f3c1c1";ctx.beginPath();ctx.moveTo(110,0);ctx.lineTo(110,PH);ctx.stroke();ctx.restore()}
-function strokeSeg(s,a,b){ctx.save();ctx.lineCap="round";ctx.lineJoin="round";
-  if(s.tool==="er"){ctx.globalCompositeOperation="destination-out"}
-  if(s.tool==="hi"){ctx.globalAlpha=.28;ctx.globalCompositeOperation="multiply"}
-  ctx.strokeStyle=s.tool==="hi"?"#facc15":s.color;
-  const base=s.tool==="er"?s.size*6:s.tool==="hi"?s.size*6:s.size*1.6;ctx.lineWidth=s.tool==="pen"?base*(0.35+b.p*1.3):base;
-  ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.restore()}
-let inkLayer=document.createElement("canvas");inkLayer.width=PW;inkLayer.height=PH;
-function redraw(){drawLines();const lc=inkLayer.getContext("2d");lc.clearRect(0,0,PW,PH);
-  const real=ctx;J.strokes.forEach(s=>{for(let i=1;i<s.pts.length;i++){strokeOn(lc,s,s.pts[i-1],s.pts[i])}});ctx.drawImage(inkLayer,0,0)}
-function strokeOn(c,s,a,b){c.save();c.lineCap="round";c.lineJoin="round";
-  if(s.tool==="er")c.globalCompositeOperation="destination-out";
-  if(s.tool==="hi")c.globalAlpha=.3;
-  c.strokeStyle=s.tool==="hi"?"#facc15":s.color;
-  const base=s.tool==="er"?s.size*6:s.tool==="hi"?s.size*6:s.size*1.6;c.lineWidth=s.tool==="pen"?base*(0.35+b.p*1.3):base;
+const inkLayer=document.createElement("canvas");inkLayer.width=PW;inkLayer.height=PH;
+function drawLines(){ctx.fillStyle="#fbfaf5";ctx.fillRect(0,0,PW,PH);ctx.strokeStyle="#dfe6f1";ctx.lineWidth=2;
+  for(let y=120;y<PH;y+=56){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(PW,y);ctx.stroke()}ctx.strokeStyle="#f3c1c1";ctx.beginPath();ctx.moveTo(110,0);ctx.lineTo(110,PH);ctx.stroke()}
+function strokeOn(c,s,a,b){c.save();c.lineCap="round";c.lineJoin="round";if(s.tool==="er")c.globalCompositeOperation="destination-out";if(s.tool==="hi")c.globalAlpha=.3;
+  c.strokeStyle=s.tool==="hi"?"#facc15":s.color;const base=s.tool==="pen"?s.size*1.6:s.size*6;c.lineWidth=s.tool==="pen"?base*(0.35+b.p*1.3):base;
   c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.stroke();c.restore()}
+function redraw(){const lc=inkLayer.getContext("2d");lc.clearRect(0,0,PW,PH);J.strokes.forEach(s=>{for(let i=1;i<s.pts.length;i++)strokeOn(lc,s,s.pts[i-1],s.pts[i])});drawLines();ctx.drawImage(inkLayer,0,0)}
 function pt(e){const r=cv.getBoundingClientRect();return {x:(e.clientX-r.left)*PW/r.width,y:(e.clientY-r.top)*PH/r.height,p:e.pointerType==="pen"?(e.pressure||.5):.5}}
 const accepts=e=>!J.palm||e.pointerType==="pen"||e.pointerType==="mouse";
-cv.addEventListener("pointerdown",e=>{if(!accepts(e))return;e.preventDefault();cv.setPointerCapture(e.pointerId);
-  J.cur={tool:J.tool,color:J.color,size:J.size,pts:[pt(e)]};J.strokes.push(J.cur)});
-cv.addEventListener("pointermove",e=>{if(!J.cur||!accepts(e))return;e.preventDefault();
-  const evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];evs.forEach(ev=>{const p=pt(ev),a=J.cur.pts[J.cur.pts.length-1];J.cur.pts.push(p);
-    const lc=inkLayer.getContext("2d");strokeOn(lc,J.cur,a,p)});drawLines();ctx.drawImage(inkLayer,0,0)});
-const endStroke=e=>{if(!J.cur)return;J.cur=null;scheduleSave()};
-cv.addEventListener("pointerup",endStroke);cv.addEventListener("pointercancel",endStroke);
+cv.addEventListener("pointerdown",e=>{if(!accepts(e))return;e.preventDefault();cv.setPointerCapture(e.pointerId);J.cur={tool:J.tool,color:J.color,size:J.size,pts:[pt(e)]};J.strokes.push(J.cur)});
+cv.addEventListener("pointermove",e=>{if(!J.cur||!accepts(e))return;e.preventDefault();const lc=inkLayer.getContext("2d");
+  (e.getCoalescedEvents?e.getCoalescedEvents():[e]).forEach(ev=>{const p=pt(ev),a=J.cur.pts[J.cur.pts.length-1];J.cur.pts.push(p);strokeOn(lc,J.cur,a,p)});drawLines();ctx.drawImage(inkLayer,0,0)});
+const endStroke=()=>{if(!J.cur)return;J.cur=null;scheduleSave()};cv.addEventListener("pointerup",endStroke);cv.addEventListener("pointercancel",endStroke);
 let svT;function scheduleSave(){clearTimeout(svT);svT=setTimeout(savePage,500)}
 async function savePage(){if(!J.page)return;J.page.strokes=J.strokes;J.page.title=$("#jTitle").value;J.page.updated=Date.now();
-  const th=document.createElement("canvas");th.width=300;th.height=400;th.getContext("2d").drawImage(cv,0,0,300,400);J.page.thumb=th.toDataURL("image/jpeg",.7);
-  await DB.put(J.page);renderEntries()}
-async function newPage(){J.page={id:"pg"+Date.now(),created:Date.now(),updated:Date.now(),title:"",strokes:[]};J.strokes=J.page.strokes;$("#jTitle").value="";redraw();await savePage()}
-async function loadPage(p){J.page=p;J.strokes=p.strokes||[];$("#jTitle").value=p.title||"";redraw();renderEntries()}
+  const th=document.createElement("canvas");th.width=300;th.height=400;th.getContext("2d").drawImage(cv,0,0,300,400);J.page.thumb=th.toDataURL("image/jpeg",.7);await DB.put(J.page);renderEntries()}
+async function newPage(){J.page={id:"pg"+Date.now(),created:Date.now(),title:"",strokes:[]};J.strokes=J.page.strokes;$("#jTitle").value="";redraw();await savePage()}
+function loadPage(p){J.page=p;J.strokes=p.strokes||[];$("#jTitle").value=p.title||"";redraw();renderEntries()}
 async function renderEntries(){const all=(await DB.all()).sort((a,b)=>b.created-a.created);const box=$("#entries");box.innerHTML="";
-  all.forEach(p=>{const b=document.createElement("button");b.className="entry"+(J.page&&J.page.id===p.id?" on":"");
-    const img=document.createElement("img");img.alt="";if(p.thumb)img.src=p.thumb;const sm=document.createElement("small");
-    sm.textContent=(p.title?p.title+" · ":"")+new Date(p.created).toLocaleDateString(undefined,{day:"numeric",month:"short"});
-    b.append(img,sm);b.onclick=()=>loadPage(p);box.appendChild(b)})}
+  all.forEach(p=>{const b=document.createElement("button");b.className="entry"+(J.page&&J.page.id===p.id?" on":"");const img=document.createElement("img");img.alt="";if(p.thumb)img.src=p.thumb;
+    const sm=document.createElement("small");sm.textContent=(p.title?p.title+" · ":"")+new Date(p.created).toLocaleDateString(undefined,{day:"numeric",month:"short"});b.append(img,sm);b.onclick=()=>loadPage(p);box.appendChild(b)})}
 function setTool(t){J.tool=t;[["pen","#tPen"],["hi","#tHi"],["er","#tEr"]].forEach(([k,s])=>$(s).setAttribute("aria-pressed",k===t))}
 $("#tPen").onclick=()=>setTool("pen");$("#tHi").onclick=()=>setTool("hi");$("#tEr").onclick=()=>setTool("er");
 COLORS.forEach((c,i)=>{const b=document.createElement("button");b.className="swatch";b.style.background=c;b.setAttribute("aria-label","Colour "+(i+1));b.setAttribute("aria-pressed",i===0);
   b.onclick=()=>{J.color=c;setTool("pen");document.querySelectorAll(".swatch").forEach(x=>x.setAttribute("aria-pressed",x===b))};$("#swatches").appendChild(b)});
 $("#size").oninput=e=>J.size=+e.target.value;
-function setPalm(v){J.palm=v;$("#palm").setAttribute("aria-checked",v);$("#paper").classList.toggle("palm-on",v);
-  $("#palmNote").textContent=v?"Palm rejection on: only your stylus (or a mouse) writes. Fingers and your palm are ignored, and one finger scrolls the page.":"Palm rejection off: fingers draw too.";
-  try{localStorage.setItem(KEY+"-j",JSON.stringify({palm:v}))}catch(e){}}
+function setPalm(v){J.palm=v;$("#palm").setAttribute("aria-checked",v);$("#palmNote").textContent=v?"Palm rejection is on: only your stylus writes. Your palm and fingers are ignored. Scroll by swiping outside the page.":"Palm rejection is off: fingers draw too.";try{localStorage.setItem(KEY+"-j",JSON.stringify({palm:v}))}catch(e){}}
 $("#palm").onclick=()=>setPalm(!J.palm);
 $("#undo").onclick=()=>{J.strokes.pop();redraw();scheduleSave()};
-$("#clearPage").onclick=()=>{if(!J.strokes.length)return;if(confirmTwice("#clearPage","Tap again to clear")){J.strokes.length=0;redraw();scheduleSave()}};
-$("#newPage").onclick=newPage;
-$("#jTitle").oninput=scheduleSave;
-$("#delPage").onclick=async()=>{if(!J.page)return;if(!confirmTwice("#delPage","Tap again to delete"))return;await DB.del(J.page.id);const all=(await DB.all()).sort((a,b)=>b.created-a.created);if(all.length)loadPage(all[0]);else newPage()};
-function confirmTwice(sel,msg){const b=$(sel);if(b.dataset.arm){delete b.dataset.arm;b.textContent=b.dataset.orig;return true}
-  b.dataset.orig=b.textContent;b.dataset.arm=1;b.textContent=msg;setTimeout(()=>{if(b.dataset.arm){delete b.dataset.arm;b.textContent=b.dataset.orig}},3000);return false}
-(async()=>{setPalm(J.palm);await DB.open();const all=(await DB.all()).sort((a,b)=>b.created-a.created);if(all.length)loadPage(all[0]);else newPage()})();
+function confirmTwice(sel,msg){const b=$(sel);if(b.dataset.arm){delete b.dataset.arm;b.textContent=b.dataset.orig;return true}b.dataset.orig=b.textContent;b.dataset.arm=1;b.textContent=msg;setTimeout(()=>{if(b.dataset.arm){delete b.dataset.arm;b.textContent=b.dataset.orig}},3000);return false}
+$("#clearPage").onclick=()=>{if(J.strokes.length&&confirmTwice("#clearPage","Tap again to clear")){J.strokes.length=0;redraw();scheduleSave()}};
+$("#newPage").onclick=newPage;$("#jTitle").oninput=scheduleSave;
+$("#delPage").onclick=async()=>{if(!J.page||!confirmTwice("#delPage","Tap again to delete"))return;await DB.del(J.page.id);const all=(await DB.all()).sort((a,b)=>b.created-a.created);all.length?loadPage(all[0]):newPage()};
+(async()=>{setPalm(J.palm);await DB.open();const all=(await DB.all()).sort((a,b)=>b.created-a.created);all.length?loadPage(all[0]):newPage()})();
 
 /* ---------- MORE ---------- */
 $("#repoTable").insertAdjacentHTML("beforeend",REPOS.map(([r,u,w])=>`<tr><td><a href="https://github.com/${r}" target="_blank" rel="noopener"><b>${r.split("/")[1]}</b></a><br><small style="color:var(--mute)">${r}</small></td><td>${u}</td><td>${w}</td></tr>`).join(""));
-document.querySelectorAll("code.cmd").forEach(c=>c.onclick=()=>{try{navigator.clipboard.writeText(c.textContent);toast("Copied")}catch(e){}});
 document.querySelectorAll(".subtabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".subtabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));document.querySelectorAll("[data-sub]").forEach(s=>s.hidden=s.dataset.sub!==b.dataset.s)});
 [["#startDate","start"],["#pFrom","pFrom"],["#pTo","pTo"]].forEach(([s,k])=>{$(s).value=S[k]||"";$(s).onchange=e=>{S[k]=e.target.value;save();renderAll()}});
 $("#log").value=S.log||"";$("#log").oninput=e=>{S.log=e.target.value;save()};
-$("#exportBtn").onclick=async()=>{const name=`roadmap-progress-${iso(today())}.json`,data=JSON.stringify(S,null,1);
-  let dl=null;try{if(window.claude&&window.claude.use)dl=await window.claude.use("downloads")}catch(e){}
-  if(dl){try{await dl.save({filename:name,data:new Blob([data],{type:"application/json"})});toast("Backup saved")}catch(e){toast("Download was cancelled")}return}
+$("#exportBtn").onclick=async()=>{const name=`dailydally-progress-${iso(today())}.json`,data=JSON.stringify(S,null,1);let dl=null;
+  try{if(window.claude&&window.claude.use)dl=await window.claude.use("downloads")}catch(e){}
+  if(dl){try{await dl.save({filename:name,data:new Blob([data],{type:"application/json"})});toast("Backup saved")}catch(e){toast("Download cancelled")}return}
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));a.download=name;a.click();toast("Backup downloaded")};
-$("#importFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d.done!=="object")throw 0;S=Object.assign({},DEF,d,{v2:1});save();renderAll();toast("Progress restored")}catch(_){toast("That file isn't a roadmap backup")}};r.readAsText(f);e.target.value=""};
-$("#resetBtn").onclick=()=>{if(!confirmTwice("#resetBtn","Tap again to reset"))return;S=Object.assign({},DEF,{done:{},check:{},chat:[],v2:1});save();renderAll();toast("Progress reset")};
-$("#remTime").value=S.rem||"17:30";$("#remTime").onchange=e=>{S.rem=e.target.value;save()};
-function notifState(){const ok="Notification" in window;$("#notifState").textContent=!ok?"Not supported here.":Notification.permission==="granted"?"On. Nags you at your reminder time, and at 23:00, if today's lesson isn't done (skipped during the pause and on Fridays).":Notification.permission==="denied"?"Blocked in your browser settings.":"Off."}
-$("#notifBtn").onclick=async()=>{if(!("Notification" in window))return notifState();try{await Notification.requestPermission()}catch(e){}notifState()};notifState();
-let lastNag="";setInterval(()=>{renderHero();
-  if(!("Notification" in window)||Notification.permission!=="granted"||doneToday()||inPause(today())||today().getDay()===5||today()<d0(S.start))return;
-  const n=new Date(),hm=`${String(n.getHours()).padStart(2,"0")}:${String(n.getMinutes()).padStart(2,"0")}`,key=iso(today())+hm;
-  if((hm===S.rem||hm==="23:00")&&lastNag!==key){lastNag=key;const q=nextLesson();try{new Notification(hm==="23:00"?"⏰ 1 hour left. Your streak dies at midnight.":"Pix is waiting 👀",{body:q?q.text:"Open your path.",tag:"roadmap"})}catch(e){}}},30000);
+$("#importFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d.done!=="object")throw 0;S=Object.assign({},DEF,d,{v2:1});save();renderAll();toast("Progress restored")}catch(_){toast("That file isn't a DailyDally backup")}};r.readAsText(f);e.target.value=""};
+$("#resetBtn").onclick=()=>{if(!confirmTwice("#resetBtn","Tap again to reset"))return;S=Object.assign({},DEF,{done:{},check:{},chat:[]});save();renderAll();toast("Progress reset")};
 
 /* tabs */
-function show(v){document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x.dataset.v===v));
-  document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id===v));window.scrollTo({top:0})}
+function show(v){document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x.dataset.v===v));document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id===v));window.scrollTo({top:0})}
 document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>show(b.dataset.v));
-function renderAll(){renderHero();renderPath();renderProg()}
+function renderAll(){renderToday();renderGoal();renderUnitCard();renderPath();renderProg();pushWidget()}
 renderAll();
-if(!window.Capacitor&&"serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(()=>{});
+setInterval(()=>{if(!LV)renderToday()},60000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!LV)renderAll()});
+if(!window.Capacitor&&"serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
 </html>

@@ -25,6 +25,8 @@ jobs:
         run: npx cap add android
       - name: App icons from assets/icon.png
         run: npx capacitor-assets generate --android --iconBackgroundColor '#0b0c0f' --iconBackgroundColorDark '#0b0c0f' --splashBackgroundColor '#0b0c0f' --splashBackgroundColorDark '#0b0c0f'
+      - name: Add home-screen widgets
+        run: python3 native/install.py
       - name: Copy web files into the app
         run: npx cap sync android
       - name: Build APK
