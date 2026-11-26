@@ -18,7 +18,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-      - uses: android-actions/setup-android@v3
+      # GitHub's ubuntu runner already has the Android SDK installed (ANDROID_HOME).
       - name: Install Capacitor
         run: npm install
       - name: Create Android project
